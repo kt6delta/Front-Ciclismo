@@ -1,0 +1,34 @@
+{
+  "name": "psicology",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@nextui-org/react": "^2.3.6",
+    "@whoicd/icd11ect": "1.7.0",
+    "axios": "^1.7.2",
+    "framer-motion": "^11.1.7",
+    "next": "14.2.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^5.1.0",
+    "react-vertical-timeline-component": "^3.6.0",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-vertical-timeline-component": "^3.3.6",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
