@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import {nextui} from '@nextui-org/react';
+import { nextui } from '@nextui-org/react';
 
 const config: Config = {
   content: [
@@ -18,26 +18,26 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        
+
       },
       borderRadius: {
         default: '24px',
       },
-      spacing:{
+      spacing: {
         'md': '16px',
-        'lg' : '26px',
-        'xl' : '32px',
+        'lg': '26px',
+        'xl': '32px',
         '2xl': '44px',
         '3xl': '64px',
       },
-      padding:{
+      padding: {
         'bl': '12px', //base layout
         'sml': '40px', //small layout
         'mdl': '80px', //medium layout
         'lgl': '120px', //large layout
-        'module' : '34px 20px',
-        'sm-questionary' : '40px 30px',
-        'questionary' : '66px 58px'
+        'module': '34px 20px',
+        'sm-questionary': '40px 30px',
+        'questionary': '66px 58px'
       },
       fontSize: {
         'xs': '10px',
@@ -64,8 +64,10 @@ const config: Config = {
         'bold': '700',
       },
       backgroundColor: {
-        'primary': '#006FEE',
-        'secondary': '#00353d',
+        'primary': {
+          'DEFAULT': '#5CE1B7',
+        },
+        'secondary': '#00353D',
         'success': '#5ce1b7',
         'warning': '#f5a623',
       },
@@ -74,11 +76,11 @@ const config: Config = {
   darkMode: "class",
   plugins: [
     nextui({
-      layout: { 
+      layout: {
         disabledOpacity: "0.3",
         hoverOpacity: "0.9",
         radius: {
-          large: "24px", 
+          large: "24px",
         },
       },
       themes: {
@@ -87,10 +89,9 @@ const config: Config = {
             background: "#fafafa",
             primary: {
               foreground: "#fafafa",
-              DEFAULT: "#006FEE"
+              DEFAULT: "#5CE1B7"
             },
-            secondary: "#00353d",
-            success: "#5ce1b7",
+            secondary: "#00353D",
             warning: "#f5a623",
             danger: "#ff3860",
           },

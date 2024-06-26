@@ -4,7 +4,6 @@ import { Spinner } from "@nextui-org/react";
 import { Header } from "@/components/reusable/Header";
 import { CardWrapper } from "@/components/reusable/CardWrapper";
 import { FooterPage } from "@/components/reusable/FooterPage";
-import useStore from '@/stores/stores';
 
 interface LoadingProps {
     children?: React.ReactNode;
@@ -12,7 +11,6 @@ interface LoadingProps {
 
 export const Loading: React.FC<LoadingProps> = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
-    const { name, gender, user } = useStore();
 
     useEffect(() => {
         setIsLoading(false);
@@ -31,16 +29,19 @@ export const Loading: React.FC<LoadingProps> = ({ children }) => {
             </div>
         );
     }
-
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen">
-            <Header user={user} name={name} gender={gender}/>
-            <div className='lg:w-full'>
-                <CardWrapper className='p-10'>
-                    {children}
-                </CardWrapper>
+    else {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-screen">
+                <div className='lg:w-full'>
+                    <CardWrapper className='p-0'>
+                        <Header/>
+                        <div className="p-10">
+                        {children}
+                        </div>
+                        <FooterPage />
+                    </CardWrapper>
+                </div>
             </div>
-            <FooterPage />
-        </div>
-    );
+        );
+    }
 };
