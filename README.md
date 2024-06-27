@@ -1,4 +1,4 @@
-REACT + NEXT + NEXT UI
+REACT + NEXT + NEXT UI + phaser + react-beautiful-dnd
 
 - Rama dedicada a merge (mezclar funciones)
 
