@@ -13,9 +13,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
   return (
     <html lang="es">
-      <body className={`${inter.className} `}>
+      <body className={`${inter.className}`}>
         <NextUIProvider>
-          <main className="h-screen w-full">
+          <main className="h-screen w-full font-primary">
             {children}
           </main>
         </NextUIProvider>

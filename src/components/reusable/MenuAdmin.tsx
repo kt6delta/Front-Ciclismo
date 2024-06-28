@@ -4,7 +4,7 @@ interface MenuProps {
     children?: React.ReactNode;
 }
 
-export const Menu: React.FC<MenuProps> = ({ children }) => {
+export const MenuAdmin: React.FC<MenuProps> = ({ children }) => {
     return (
         <>
             {children}

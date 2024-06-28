@@ -18,7 +18,8 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-
+        primary: ['var(--font-ubuntu)'],
+        secondary: ['var(--font-nunito)'],
       },
       borderRadius: {
         default: '24px',
@@ -88,12 +89,21 @@ const config: Config = {
           colors: {
             background: "#fafafa",
             primary: {
+              600: "rgba(92, 225, 183, 0.6)",
               foreground: "#fafafa",
               DEFAULT: "#5CE1B7"
             },
-            secondary: "#00353D",
+            secondary: {
+              50: 'rgba(0, 53, 61, 0.05)',
+              100: 'rgba(0, 53, 61, 0.1)',
+              300: 'rgba(0, 53, 61, 0.3)',
+              600: 'rgba(0, 53, 61, 0.6)',
+              DEFAULT: "#00353d",
+              foreground: "#fafafa",
+            },
+            success: "#5ce1b7",
+            danger: "#ff738f",
             warning: "#f5a623",
-            danger: "#ff3860",
           },
         },
         dark: {},
