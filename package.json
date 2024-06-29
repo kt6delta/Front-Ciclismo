@@ -12,6 +12,7 @@
     "@nextui-org/react": "^2.3.6",
     "@whoicd/icd11ect": "1.7.0",
     "axios": "^1.7.2",
+    "country-list": "^2.3.0",
     "framer-motion": "^11.1.7",
     "next": "14.2.3",
     "react": "^18.2.0",
@@ -21,6 +22,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@types/country-list": "^2.1.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

@@ -1,3 +1,7 @@
+import { getNames } from 'country-list';
+
+export const countries = getNames();
+
 export const rol = [
   { label: "Ciclista", value: "1" },
   { label: "Masajista", value: "2" },
