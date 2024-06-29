@@ -1,12 +1,73 @@
 'use client';
 import { Input, Button } from "@nextui-org/react";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
 import Link from "next/link";
 import { rol, contexturas, especialidad, sexos } from "@/utils/constantes/data";
 
+//patron estrategia
+interface IFormStrategy {
+  handleSubmit(formData: any): Promise<string>;
+}
+class CiclistaStrategy implements IFormStrategy {
+  router: any;
+  constructor(router: any) {
+    this.router = router;
+  }
+  async handleSubmit(formData: any): Promise<string> {
+    const { rol, nombre, cedula, sexo, contextura, especialidad, email } = formData;
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_BACKEND}/api/auth/login`, {
+      rol,
+      nombre,
+      cedula,
+      sexo,
+      contextura,
+      especialidad,
+      email,
+    });
+    this.router.push('/ciclista');
+    return response.data.id;
+  }
+}
+class MasajistaStrategy implements IFormStrategy {
+  router: any;
+  constructor(router: any) {
+    this.router = router;
+  }
+  async handleSubmit(formData: any): Promise<string> {
+    const { rol, nombre, cedula, sexo, email, experiencia } = formData;
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_BACKEND}/api/auth/login`, {
+      rol,
+      nombre,
+      cedula,
+      sexo,
+      experiencia,
+      email,
+    });
+    return response.data.id;
+  }
+}
+
+class DirectorStrategy implements IFormStrategy {
+  router: any;
+  constructor(router: any) {
+    this.router = router;
+  }
+  async handleSubmit(formData: any): Promise<string> {
+    const { rol, nombre, cedula, sexo, email, experiencia } = formData;
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_BACKEND}/api/auth/login`, {
+      rol,
+      nombre,
+      cedula,
+      sexo,
+      experiencia,
+      email
+    });
+    return response.data.id;
+  }
+}
 
 export default function Registro() {
   const router = useRouter();
@@ -20,63 +81,47 @@ export default function Registro() {
     email: "",
     experiencia: ""
   });
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
+  const [formStrategy, setFormStrategy] = useState<IFormStrategy | null>(null);
 
-  const handleRadioChange = (value: string) => {
-    setFormData(prevState => ({
-      ...prevState,
-      sexo: value
-    }));
-  };
+  useEffect(() => {
+    // Cambiar la estrategia según el rol
+    switch (formData.rol) {
+      case "ciclista":
+        setFormStrategy(new CiclistaStrategy(router));
+        break;
+      case "masajista":
+        setFormStrategy(new MasajistaStrategy(router));
+        break;
+      case "director":
+        setFormStrategy(new DirectorStrategy(router));
+        break;
+      default:
+        setFormStrategy(null);
+    }
+  }, [formData.rol]);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      const { rol, nombre, cedula, sexo, contextura, especialidad, email, experiencia } = formData;
-      if (rol === "cilista") {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_BACKEND}/api/auth/login`, {
-          rol,
-          nombre,
-          cedula,
-          sexo,
-          contextura,
-          especialidad,
-          email,
-        });
-        // localStorage.setItem('jwt', response.data.jwt);
-        router.push('/ciclista');
-      }
-      else if (rol === "masajista") {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_BACKEND}/api/auth/login`, {
-          rol,
-          nombre,
-          cedula,
-          sexo,
-          experiencia,
-          email,
-        });
-        // localStorage.setItem('jwt', response.data.jwt);
-        router.push('/masajista');
-      }
-      else if (rol === "director") {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_BACKEND}/api/auth/login`, {
-          rol,
-          nombre,
-          cedula,
-          sexo,
-          experiencia,
-          email
-        });
-        router.push('/director');
-      }
-      console.log(formData);
-    } catch (error) {
-      console.error(error);
+    if (formStrategy) {
+      const response = await formStrategy.handleSubmit(formData);
+      console.log(response);
+      localStorage.setItem('id', response);
+    } else {
+      console.log("rol no valido");
+    }
+  };
+  const handleChange = (e: any, value?: string) => {
+    if (value !== undefined) {
+      setFormData(prevState => ({
+        ...prevState,
+        sexo: value
+      }));
+    } else {
+      const { name, value } = e.target;
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
     }
   };
   return (
@@ -160,7 +205,7 @@ export default function Registro() {
                       </div>
                     );
                   } else {
-                     {/* Componentes para masajista director */}
+                    {/* Componentes para masajista director */ }
                     return (
                       <Input
                         isRequired={true}
@@ -206,7 +251,7 @@ export default function Registro() {
                     transition-all ease-in-out duration-300 
                     ${formData.sexo === option ? 'bg-primary' : ''} 
                     outline-secondary`}
-                        onKeyDown={(event) => event.key === 'Enter' && handleRadioChange(option)}>
+                        onKeyDown={(event) => event.key === 'Enter' && handleChange(undefined, option)}>
                         {option}
                         <input
                           type='radio'
@@ -214,7 +259,7 @@ export default function Registro() {
                           id={`${indexOption}`}
                           name="sexo"
                           value={option}
-                          onChange={() => handleRadioChange(option)}
+                          onChange={() => handleChange(undefined, option)}
                           checked={formData.sexo === option}
                         />
                       </label>
