@@ -3,12 +3,10 @@ import { Input, Button } from "@nextui-org/react";
 import Image from "next/image";
 import { EyeFilledIcon } from "@/components/reusable/register/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "@/components/reusable/register/EyeSlashFilledIcon";
-import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import React, { FormEvent, useState } from "react";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
-import { rol } from "@/utils/constantes/data";
 
 export default function Login() {
   const router = useRouter();

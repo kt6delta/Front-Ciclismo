@@ -87,7 +87,7 @@ const config: Config = {
       themes: {
         light: {
           colors: {
-            background: "#fafafa",
+            background: '#fafafa',
             primary: {
               600: "rgba(92, 225, 183, 0.6)",
               foreground: "#fafafa",
@@ -102,7 +102,7 @@ const config: Config = {
               foreground: "#fafafa",
             },
             success: "#5ce1b7",
-            danger: "#ff738f",
+            danger: "#ffffff", //whithe
             warning: "#f5a623",
           },
         },

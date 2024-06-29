@@ -33,3 +33,9 @@ export const especialidad = [
   { label: "Rodadores", value: "2" , recomendar: "se recomienda contextura corpulenta"},
   { label: "Sprinters", value: "3" , recomendar: "se recomienda contextura muy corpulenta"},
 ]; 
+
+export const acciones = [
+  { label: "Agregar", value: "agregar" },
+  { label: "Editar", value: "editar" },
+  { label: "Eliminar", value: "eliminar" }
+];
