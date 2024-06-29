@@ -1,7 +1,7 @@
 export const rol = [
-  { label: "Ciclista", value: "ciclista" },
-  { label: "Masajista", value: "masajista" },
-  { label: "Director", value: "director" }
+  { label: "Ciclista", value: "1" },
+  { label: "Masajista", value: "2" },
+  { label: "Director", value: "3" }
 ];
 
 export const sexos = ["Masculino", "Femenino"];
@@ -22,10 +22,10 @@ export const contexturas = [
 ]
 
 export const especialidad = [
-  { label: "Escaladores", value: "escalador", recomendar: "se recomienda contextura muy delgada"},
-  { label: "Contrarelojistas", value: "contrarelojista" , recomendar: "se recomienda contextura delgada"},
-  { label: "Gregarios", value: "gregario" , recomendar: "se recomienda contextura media"},
-  { label: "Clasicomanos", value: "clasicomano", recomendar: "se recomienda contextura media" },
-  { label: "Rodadores", value: "rodador" , recomendar: "se recomienda contextura corpulenta"},
-  { label: "Sprinters", value: "sprinter" , recomendar: "se recomienda contextura muy corpulenta"},
+  { label: "Escaladores", value: "1", recomendar: "se recomienda contextura muy delgada"},
+  { label: "Contrarelojistas", value: "6" , recomendar: "se recomienda contextura delgada"},
+  { label: "Gregarios", value: "4" , recomendar: "se recomienda contextura media"},
+  { label: "Clasicomanos", value: "5", recomendar: "se recomienda contextura media" },
+  { label: "Rodadores", value: "2" , recomendar: "se recomienda contextura corpulenta"},
+  { label: "Sprinters", value: "3" , recomendar: "se recomienda contextura muy corpulenta"},
 ]; 

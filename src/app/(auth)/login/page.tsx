@@ -16,7 +16,6 @@ export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    rol: ""
   });
 
   const toggleVisibility = () => setIsVisible(!isVisible);
@@ -32,14 +31,13 @@ export default function Login() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const { email, password, rol } = formData;
-      console.log(formData);
-      // const authResponse = await axios.post(`${process.env.NEXT_PUBLIC_URL_BACKEND}/api/auth/login`, {
-      //   rol,
-      //   identifier: email,
-      //   password,
-      // });
-      // localStorage.setItem('jwt', authResponse.data.jwt);
+      const { email, password } = formData;
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_BACKEND}/login`, {
+        email,
+        password,
+      });
+      console.log(response);
+      // localStorage.setItem('id', response.data.id);
       // router.push('/dashboard');
     } catch (error) {
       console.error(error);
@@ -62,26 +60,6 @@ export default function Login() {
         <div className="flex w-full flex-col gap-4 p-10 my-auto">
           <h1 className="text-center text-secondary text-3xl font-semibold">INGRESO</h1>
           <div className="flex flex-col gap-4 p-5">
-            <Autocomplete
-              label="Rol"
-              color="secondary"
-              variant="underlined"
-              size="md"
-              radius="md"
-              isRequired={true}
-              placeholder="Seleccione un Rol"
-              defaultItems={rol}
-              onSelectionChange={(value) => setFormData(prev => ({ ...prev, rol: value as string }))}
-              classNames={{
-                base: "font-bold",
-              }}
-            >
-              {rol.map((option) => (
-                <AutocompleteItem key={option.value} value={option.label} classNames={{ selectedIcon: "text-secondary" }}>
-                  {option.label}
-                </AutocompleteItem>
-              ))}
-            </Autocomplete>
             <Input isRequired={true} type="email" variant="underlined" label="Email" name="email" value={formData.email} onChange={handleChange} placeholder="tucorreo@ejemplo.com"
               classNames={{
                 base: "font-bold",
