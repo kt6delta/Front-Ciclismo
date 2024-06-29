@@ -90,6 +90,12 @@ const config: Config = {
             background: '#fafafa',
             primary: {
               600: "rgba(92, 225, 183, 0.6)",
+              50: "#E8FAF0",
+              300:"#74DFA2",
+              400:"#45D483",
+              100:"#D1F4E0",
+              200:"#A2E9C1",
+              500:"#17C964",
               foreground: "#fafafa",
               DEFAULT: "#5CE1B7"
             },
