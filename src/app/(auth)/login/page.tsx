@@ -1,8 +1,8 @@
 'use client';
 import { Input, Button } from "@nextui-org/react";
 import Image from "next/image";
-import { EyeFilledIcon } from "@/components/reusable/EyeFilledIcon";
-import { EyeSlashFilledIcon } from "@/components/reusable/EyeSlashFilledIcon";
+import { EyeFilledIcon } from "@/components/reusable/register/EyeFilledIcon";
+import { EyeSlashFilledIcon } from "@/components/reusable/register/EyeSlashFilledIcon";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import React, { FormEvent, useState } from "react";
 import axios from 'axios';

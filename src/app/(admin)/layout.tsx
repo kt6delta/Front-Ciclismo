@@ -1,4 +1,4 @@
-import { MenuAdmin } from '@/components/reusable/MenuAdmin';
+import { MenuAdmin } from '@/components/reusable/admin/MenuAdmin';
 
 export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
 

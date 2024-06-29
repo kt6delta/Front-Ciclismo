@@ -98,7 +98,7 @@ export default function Registro() {
       default:
         setFormStrategy(null);
     }
-  }, [formData.rol]);
+  }, [formData.rol, router]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -177,7 +177,7 @@ export default function Registro() {
                           }}
                         >
                           {especialidad.map((option) => (
-                            <AutocompleteItem key={option.value} value={option.label} classNames={{ selectedIcon: "text-secondary" }}>
+                            <AutocompleteItem key={option.label} value={option.value} classNames={{ selectedIcon: "text-secondary" }}>
                               {option.label}
                             </AutocompleteItem>
                           ))}

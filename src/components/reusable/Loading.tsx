@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Spinner } from "@nextui-org/react";
-import { Header } from "@/components/reusable/Header";
+import { Header } from "@/components/reusable/user/Header";
 import { CardWrapper } from "@/components/reusable/CardWrapper";
-import { FooterPage } from "@/components/reusable/FooterPage";
+import { FooterPage } from "@/components/reusable/user/FooterPage";
 
 interface LoadingProps {
     children?: React.ReactNode;
