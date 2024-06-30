@@ -1,4 +1,5 @@
 "use client";
+import { toast } from "react-toastify";
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -21,10 +22,6 @@ interface IForm {
   handleSubmit(formData: any): Promise<boolean>;
 }
 class Ciclista implements IForm {
-  router: any;
-  constructor(router: any) {
-    this.router = router;
-  }
   async handleSubmit(formData: any): Promise<boolean> {
     const {
       rol,
@@ -39,38 +36,96 @@ class Ciclista implements IForm {
       equipos,
     } = formData;
     console.log(formData);
-    return true; //se realizo fetch con exito
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL_BACKEND}/ActualizarUsuarioCiclista`,
+        {
+          idUsuario: cedula,
+          nombre,
+          email,
+          sexo: sexo.charAt(0),
+          rol_id: rol,
+          especialidad_id: especialidad,
+          contextura,
+          acciones,
+          tiempoAcumula,
+          equipos,
+        }
+      );
+      if (response.status === 200) {
+        return true;
+      } else {
+        return false; // Ocurrió un error en el back
+      }
+    } catch (error) {
+      console.error("Error en handleSubmit:", error);
+      return false; // Ocurrió un error al realizar el fetch
+    }
   }
 }
 class Masajista implements IForm {
-  router: any;
-  constructor(router: any) {
-    this.router = router;
-  }
+
   async handleSubmit(formData: any): Promise<boolean> {
     const { rol, nombre, cedula, sexo, email, experiencia, equipos } = formData;
     console.log(formData);
-    return true;
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL_BACKEND}/ActualizarUsuarioMasajista`,
+        {
+          idUsuario: cedula,
+          nombre,
+          email,
+          sexo: sexo.charAt(0),
+          rol_id: rol,
+          anios_experiencia: experiencia,
+          equipos,
+        }
+      );
+      if (response.status === 200) {
+        return true;
+      } else {
+        return false; // Ocurrió un error en el back
+      }
+    } catch (error) {
+      console.error("Error en handleSubmit:", error);
+      return false; // Ocurrió un error al realizar el fetch
+    }
   }
 }
 class Director implements IForm {
-  router: any;
-  constructor(router: any) {
-    this.router = router;
-  }
+
   async handleSubmit(formData: any): Promise<boolean> {
     const { rol, nombre, cedula, sexo, email, nacionalidad, equipos } =
       formData;
     console.log(formData);
-    // this.router.push('/director');
-    return true; //se realizo fetch con exito
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL_BACKEND}/ActualizarUsuarioDirector`,
+        {
+          idUsuario: cedula,
+          nombre,
+          email,
+          sexo: sexo.charAt(0),
+          rol_id: rol,
+          nacionalidad,
+        }
+      );
+      if (response.status === 200) {
+        return true;
+      } else {
+        return false; // Ocurrió un error en el back
+      }
+    } catch (error) {
+      console.error("Error en handleSubmit:", error);
+      return false; // Ocurrió un error al realizar el fetch
+    }
   }
 }
 
 export default function Perfil() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    rol: "2",
+    rol: "",
     email: "",
     nombre: "",
     cedula: "",
@@ -81,34 +136,65 @@ export default function Perfil() {
     nacionalidad: "",
     tiempoAcumula: null,
     acciones: "",
-    equipos: ["Equipo 1", "Equipo 2", "Equipo 3"],
+    equipos: [],
   });
   const [form, setForm] = useState<IForm | null>(null);
   const [titulo, setTitulo] = useState("");
   const [equip, setEquip] = useState<string | string[] | null>(null);
   const [isReadOnly, setIsReadOnly] = useState(true);
+
   useEffect(() => {
+    const fetchPerfil = async () => {
+      try {
+        //hacer la peticion get en base al id
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_URL_BACKEND}/perfil/${localStorage.getItem(
+            "id"
+          )}`
+        );
+        // Suponiendo que la respuesta tiene la estructura esperada para llenar formData
+        const perfilData = response.data;
+        setFormData({
+          rol: perfilData.rol,
+          email: perfilData.email,
+          nombre: perfilData.nombre,
+          cedula: perfilData.cedula,
+          sexo: perfilData.sexo,
+          contextura: perfilData.contextura || "",
+          especialidad: perfilData.especialidad || "",
+          experiencia: perfilData.experiencia || "",
+          nacionalidad: perfilData.nacionalidad || "",
+          tiempoAcumula: perfilData.tiempoAcumula || null,
+          acciones: perfilData.acciones || "",
+          equipos: perfilData.equipos || [],
+        });
+      } catch (error) {
+        console.error("Error al obtener el perfil:", error);
+      }
+    };
+    fetchPerfil();
     // Cambiar la estrategia según el rol
     switch (formData.rol) {
       case "1":
         setTitulo("CICLISTA");
         setEquip(formData.equipos[0]);
-        setForm(new Ciclista(router));
+        setForm(new Ciclista());
         break;
       case "2":
         setTitulo("MASAJISTA");
         setEquip(null);
-        setForm(new Masajista(router));
+        setForm(new Masajista());
         break;
       case "3":
         setTitulo("DIRECTOR");
         setEquip(formData.equipos[0]);
-        setForm(new Director(router));
+        setForm(new Director());
         break;
       default:
         setForm(null);
     }
-  }, [formData.rol, formData.equipos, router, setTitulo, setEquip]);
+  }, [formData.rol, formData.equipos, setTitulo, setEquip]);
+
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -116,11 +202,13 @@ export default function Perfil() {
       if (form) {
         await form.handleSubmit(formData);
         setIsReadOnly(!isReadOnly);
+        toast.success('Datos actualizados');
       } else {
-        console.log("rol no valido");
+        toast.error("Rol no valido");
       }
     } else {
       setIsReadOnly(!isReadOnly);
+      toast.info("Editando Datos");
     }
   };
   const handleChange = (e: any, value?: string) => {
@@ -164,6 +252,7 @@ export default function Perfil() {
               type="button"
               radius="full"
               className="w-1/3 min-w-32 mb-2 text-white"
+              // onClick={() => router.push("/masajista/listaEquipos")}
             >
               {"Equipos"}
               <svg
@@ -264,7 +353,9 @@ export default function Perfil() {
                       ${formData.sexo === option ? "bg-primary" : ""} 
                       outline-secondary`}
                     onKeyDown={(event) =>
-                      !isReadOnly && event.key === "Enter" && handleChange(undefined, option)
+                      !isReadOnly &&
+                      event.key === "Enter" &&
+                      handleChange(undefined, option)
                     }
                   >
                     {option}

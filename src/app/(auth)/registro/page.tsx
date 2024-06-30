@@ -5,6 +5,7 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { toast } from "react-toastify";
 import {
   rol,
   contexturas,
@@ -18,10 +19,6 @@ interface IForm {
   handleSubmit(formData: any): Promise<string>;
 }
 class Ciclista implements IForm {
-  router: any;
-  constructor(router: any) {
-    this.router = router;
-  }
   async handleSubmit(formData: any): Promise<string> {
     const { rol, nombre, cedula, sexo, contextura, especialidad, email } =
       formData;
@@ -37,21 +34,16 @@ class Ciclista implements IForm {
         contextura,
       }
     );
-    // this.router.push('/ciclista');
     return response.data.id;
   }
 }
 class Masajista implements IForm {
-  router: any;
-  constructor(router: any) {
-    this.router = router;
-  }
   async handleSubmit(formData: any): Promise<string> {
     const { rol, nombre, cedula, sexo, email, experiencia } = formData;
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_URL_BACKEND}/registrarUsuarioMasajista`,
       {
-		idUsuario: cedula,
+        idUsuario: cedula,
         nombre,
         email,
         sexo: sexo.charAt(0),
@@ -59,21 +51,16 @@ class Masajista implements IForm {
         anios_experiencia: experiencia,
       }
     );
-	// this.router.push('/masajista');
     return response.data.id;
   }
 }
 class Director implements IForm {
-  router: any;
-  constructor(router: any) {
-    this.router = router;
-  }
   async handleSubmit(formData: any): Promise<string> {
     const { rol, nombre, cedula, sexo, email, nacionalidad } = formData;
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_URL_BACKEND}/registrarUsuarioDirector`,
       {
-		idUsuario: cedula,
+        idUsuario: cedula,
         nombre,
         email,
         sexo: sexo.charAt(0),
@@ -81,7 +68,6 @@ class Director implements IForm {
         nacionalidad,
       }
     );
-	// this.router.push('/director');
     return response.data.id;
   }
 }
@@ -105,27 +91,29 @@ export default function Registro() {
     // Cambiar la estrategia según el rol
     switch (formData.rol) {
       case "1":
-        setForm(new Ciclista(router));
+        setForm(new Ciclista());
         break;
       case "2":
-        setForm(new Masajista(router));
+        setForm(new Masajista());
         break;
       case "3":
-        setForm(new Director(router));
+        setForm(new Director());
         break;
       default:
         setForm(null);
     }
-  }, [formData.rol, router]);
+  }, [formData.rol]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (form) {
       const response = await form.handleSubmit(formData);
-      console.log(response);
+      toast.success('Login exitoso');
       localStorage.setItem("id", response);
+      router.push("/login");
     } else {
       console.log("rol no valido");
+      toast.error("Oops! Algo salio mal!");
     }
   };
   const handleChange = (e: any, value?: string) => {

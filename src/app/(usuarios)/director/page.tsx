@@ -1,14 +1,8 @@
-"use client";
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-
+import Perfil from "@/components/reusable/user/perfil";
 export default function Director() {
-    const router = useRouter();
-
-    return (
-        <>
-            <div className=''>
-            </div>
-        </>
-    )
+  return (
+    <>
+       <Perfil /> 
+    </>
+  );
 }
