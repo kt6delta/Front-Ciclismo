@@ -1,9 +1,7 @@
 export const FooterPage = () => {
     return (
-        <>
-            <div className='bg-default text-background flex justify-center w-full min-h-[7vh] rounded-2xl
-                sm:justify-end'>
-            </div>
-        </>
-    )
+        <div className="bg-primary p-0 rounded-2xl w-full h-28 mt-auto">
+            {/* Contenido del Footer aquí */}
+        </div>
+    );
 }
