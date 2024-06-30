@@ -1,14 +1,17 @@
- "use client";
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { FooterPage } from '@/components/reusable/user/FooterPage';
+"use client";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function HomePage() {
   const router = useRouter();
-
+  //const notify = () => toast.error("Oops! Algo salio mal!");
+  const notificacion = () => toast.success('Se envio exitosamente la informacion');
+  // const notify = () => toast.info("Informacion");
   return (
     <div>
-      <FooterPage />
+      <div>
+        <button onClick={notificacion}>buton</button>
+      </div>
     </div>
   );
 }

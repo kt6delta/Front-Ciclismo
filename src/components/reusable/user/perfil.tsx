@@ -18,14 +18,14 @@ import {
 import axios from "axios";
 import { TimeInput } from "@nextui-org/date-input";
 interface IForm {
-  handleSubmit(formData: any): Promise<void>;
+  handleSubmit(formData: any): Promise<boolean>;
 }
 class Ciclista implements IForm {
   router: any;
   constructor(router: any) {
     this.router = router;
   }
-  async handleSubmit(formData: any): Promise<void> {
+  async handleSubmit(formData: any): Promise<boolean> {
     const {
       rol,
       nombre,
@@ -39,16 +39,18 @@ class Ciclista implements IForm {
       equipos,
     } = formData;
     console.log(formData);
+    return true; //se realizo fetch con exito
   }
 }
-class MasajistaC implements IForm {
+class Masajista implements IForm {
   router: any;
   constructor(router: any) {
     this.router = router;
   }
-  async handleSubmit(formData: any): Promise<void> {
+  async handleSubmit(formData: any): Promise<boolean> {
     const { rol, nombre, cedula, sexo, email, experiencia, equipos } = formData;
     console.log(formData);
+    return true;
   }
 }
 class Director implements IForm {
@@ -56,18 +58,19 @@ class Director implements IForm {
   constructor(router: any) {
     this.router = router;
   }
-  async handleSubmit(formData: any): Promise<void> {
+  async handleSubmit(formData: any): Promise<boolean> {
     const { rol, nombre, cedula, sexo, email, nacionalidad, equipos } =
       formData;
     console.log(formData);
     // this.router.push('/director');
+    return true; //se realizo fetch con exito
   }
 }
 
 export default function Perfil() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    rol: "1",
+    rol: "2",
     email: "",
     nombre: "",
     cedula: "",
@@ -83,6 +86,7 @@ export default function Perfil() {
   const [form, setForm] = useState<IForm | null>(null);
   const [titulo, setTitulo] = useState("");
   const [equip, setEquip] = useState<string | string[] | null>(null);
+  const [isReadOnly, setIsReadOnly] = useState(true);
   useEffect(() => {
     // Cambiar la estrategia según el rol
     switch (formData.rol) {
@@ -93,8 +97,8 @@ export default function Perfil() {
         break;
       case "2":
         setTitulo("MASAJISTA");
-        setEquip(formData.equipos);
-        setForm(new MasajistaC(router));
+        setEquip(null);
+        setForm(new Masajista(router));
         break;
       case "3":
         setTitulo("DIRECTOR");
@@ -108,10 +112,15 @@ export default function Perfil() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (form) {
-      await form.handleSubmit(formData);
+    if (isReadOnly == false) {
+      if (form) {
+        await form.handleSubmit(formData);
+        setIsReadOnly(!isReadOnly);
+      } else {
+        console.log("rol no valido");
+      }
     } else {
-      console.log("rol no valido");
+      setIsReadOnly(!isReadOnly);
     }
   };
   const handleChange = (e: any, value?: string) => {
@@ -146,10 +155,37 @@ export default function Perfil() {
           </div>
         </div>
         <h1 className="absolute right-0 text-secondary text-base md:text-xl xl:text-2xl font-bold text-right px-[60px]">
-          {equip}
+          {equip ? (
+            `${equip}`
+          ) : (
+            <Button
+              color="secondary"
+              variant="solid"
+              type="button"
+              radius="full"
+              className="w-1/3 min-w-32 mb-2 text-white"
+            >
+              {"Equipos"}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1.3rem"
+                height="1.3rem"
+                viewBox="0 0 24 24"
+              >
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                >
+                  <path d="m9 10l3.258 2.444a1 1 0 0 0 1.353-.142L20 5" />
+                  <path d="M21 12a9 9 0 1 1-6.67-8.693" />
+                </g>
+              </svg>
+            </Button>
+          )}
         </h1>
       </div>
-
       <form className="w-full p-10 grid my-auto" onSubmit={handleSubmit}>
         <div className="flex flex-col items-center">
           <Button
@@ -159,12 +195,13 @@ export default function Perfil() {
             radius="full"
             className="w-1/3 min-w-32 mb-2 text-white"
           >
-            Editar Perfil
+            {isReadOnly == true ? "Editar Perfil" : "Guardar Perfil"}
           </Button>
         </div>
         <div className="grid sm:grid-cols-2 gap-4 p-5">
           {/* inputs */}
           <Input
+            isReadOnly={isReadOnly}
             isRequired={true}
             type="email"
             variant="underlined"
@@ -178,6 +215,7 @@ export default function Perfil() {
             }}
           />
           <Input
+            isReadOnly={isReadOnly}
             isRequired={true}
             type="text"
             variant="underlined"
@@ -191,6 +229,7 @@ export default function Perfil() {
             }}
           />
           <Input
+            isReadOnly={isReadOnly}
             isRequired={true}
             variant="underlined"
             label="cedula"
@@ -225,7 +264,7 @@ export default function Perfil() {
                       ${formData.sexo === option ? "bg-primary" : ""} 
                       outline-secondary`}
                     onKeyDown={(event) =>
-                      event.key === "Enter" && handleChange(undefined, option)
+                      !isReadOnly && event.key === "Enter" && handleChange(undefined, option)
                     }
                   >
                     {option}
@@ -237,6 +276,7 @@ export default function Perfil() {
                       value={option}
                       onChange={() => handleChange(undefined, option)}
                       checked={formData.sexo === option}
+                      disabled={isReadOnly}
                     />
                   </label>
                 </div>
@@ -250,6 +290,7 @@ export default function Perfil() {
                 <>
                   {/* Componentes para ciclista */}
                   <Autocomplete
+                    isReadOnly={isReadOnly}
                     label="Especialidad"
                     color="secondary"
                     variant="underlined"
@@ -281,6 +322,7 @@ export default function Perfil() {
                   </Autocomplete>
 
                   <Autocomplete
+                    isReadOnly={isReadOnly}
                     label="Contextura"
                     color="secondary"
                     variant="underlined"
@@ -312,6 +354,7 @@ export default function Perfil() {
                   </Autocomplete>
 
                   <Autocomplete
+                    isReadOnly={isReadOnly}
                     label="Acciones"
                     color="secondary"
                     variant="underlined"
@@ -342,6 +385,7 @@ export default function Perfil() {
                     ))}
                   </Autocomplete>
                   <TimeInput
+                    isReadOnly={isReadOnly}
                     value={formData.tiempoAcumula}
                     onChange={handleChange}
                     granularity="second"
@@ -359,6 +403,7 @@ export default function Perfil() {
             } else if (formData.rol === "2") {
               return (
                 <Input
+                  isReadOnly={isReadOnly}
                   isRequired={true}
                   variant="underlined"
                   label="Experiencia"
@@ -375,6 +420,7 @@ export default function Perfil() {
             } else if (formData.rol === "3") {
               return (
                 <Autocomplete
+                  isReadOnly={isReadOnly}
                   label="Nacionalidad"
                   color="secondary"
                   variant="underlined"
