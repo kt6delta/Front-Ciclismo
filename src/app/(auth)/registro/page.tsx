@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import {
 	rol,
 	contexturas,
-	especialidad,
+	especialidad, //sino lo llena 0
 	sexos,
 	countries,
 } from "@/utils/constantes/data";
