@@ -35,7 +35,7 @@ export const especialidad = [
 ]; 
 
 export const acciones = [
-  { label: "Agregar", value: "agregar" },
-  { label: "Editar", value: "editar" },
-  { label: "Eliminar", value: "eliminar" }
+  { label: "pedalear", value: "agregar" },
+  { label: "visualizar", value: "editar" },
+  { label: "concentrarse", value: "eliminar" }
 ];
