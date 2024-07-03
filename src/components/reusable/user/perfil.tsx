@@ -14,15 +14,28 @@ import {
   countries,
   especialidad,
   sexos,
-  acciones,
 } from "@/utils/constantes/data";
 import axios from "axios";
 
+type FormData = {
+  rol: string;
+  email: string;
+  nombre: string;
+  cedula: string;
+  sexo: string;
+  contextura: string;
+  especialidad: string;
+  experiencia: string;
+  nacionalidad: string;
+  tiempoAcumula: string;
+  acciones: string[];
+  equipos: string[];
+};
 interface IForm {
-  handleSubmit(formData: any): Promise<boolean>;
+  handleSubmit(formData: FormData): Promise<boolean>;
 }
 class Ciclista implements IForm {
-  async handleSubmit(formData: any): Promise<boolean> {
+  async handleSubmit(formData: FormData): Promise<boolean> {
     const {
       rol,
       nombre,
@@ -40,16 +53,16 @@ class Ciclista implements IForm {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_URL_BACKEND}/ActualizarUsuarioCiclista`,
         {
-          idUsuario: cedula,
+          idusuario: cedula,
           nombre,
           email,
           sexo: sexo.charAt(0),
           rol_id: rol,
           especialidad_id: especialidad,
           contextura,
-          descripcion: acciones,
-          tiempoAcumula,
-          equipos,
+          acciones,
+          tiempo_acumulado: tiempoAcumula,
+          nombreEquipo: equipos,
         }
       );
       if (response.status === 200) {
@@ -64,20 +77,20 @@ class Ciclista implements IForm {
   }
 }
 class Masajista implements IForm {
-  async handleSubmit(formData: any): Promise<boolean> {
+  async handleSubmit(formData: FormData): Promise<boolean> {
     const { rol, nombre, cedula, sexo, email, experiencia, equipos } = formData;
     console.log(formData);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_URL_BACKEND}/ActualizarUsuarioMasajista`,
         {
-          idUsuario: cedula,
+          idusuario: cedula,
           nombre,
           email,
           sexo: sexo.charAt(0),
           rol_id: rol,
           anios_experiencia: experiencia,
-          equipos,
+          nombreEquipo: equipos,
         }
       );
       if (response.status === 200) {
@@ -92,7 +105,7 @@ class Masajista implements IForm {
   }
 }
 class Director implements IForm {
-  async handleSubmit(formData: any): Promise<boolean> {
+  async handleSubmit(formData: FormData): Promise<boolean> {
     const { rol, nombre, cedula, sexo, email, nacionalidad, equipos } =
       formData;
     console.log(formData);
@@ -100,12 +113,13 @@ class Director implements IForm {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_URL_BACKEND}/ActualizarUsuarioDirector`,
         {
-          idUsuario: cedula,
+          idusuario: cedula,
           nombre,
           email,
           sexo: sexo.charAt(0),
           rol_id: rol,
           nacionalidad,
+          nombreEquipo: equipos,
         }
       );
       if (response.status === 200) {
@@ -129,17 +143,18 @@ export default function Perfil() {
     cedula: "",
     sexo: "",
     contextura: "",
-    especialidad: "",
+    especialidad: "0",
     experiencia: "",
     nacionalidad: "",
-    tiempoAcumula: 0,
-    acciones: "",
+    tiempoAcumula: "0",
+    acciones: [""],
     equipos: [""],
   });
   const [form, setForm] = useState<IForm | null>(null);
   const [titulo, setTitulo] = useState("");
   const [equip, setEquip] = useState<string | string[] | null>(null);
   const [isReadOnly, setIsReadOnly] = useState(true);
+  const [acciones, setAcciones] = useState("");
 
   useEffect(() => {
     const fetchPerfil = async () => {
@@ -189,12 +204,12 @@ export default function Perfil() {
           cedula: perfilData.idusuario.toString(),
           sexo: perfilData.sexo === "M" ? "Masculino" : "Femenino",
           contextura: perfilData.contextura || "",
-          especialidad: perfilData.especialidad_id.toString() || "",
+          especialidad: perfilData.especialidad_id.toString() || "0",
           experiencia: perfilData.experiencia || "",
           nacionalidad: perfilData.nacionalidad || "",
-          tiempoAcumula: perfilData.tiempoAcumula || 0,
-          acciones: perfilData.acciones || [],
-          equipos: perfilData.equipos || [],
+          tiempoAcumula: perfilData.tiempoAcumula || "0",
+          acciones: perfilData.acciones || [""],
+          equipos: perfilData.equipos || [""], // un array de strings con los nombres de equipos
         });
       } catch (error) {
         console.error("Error al obtener el perfil:", error);
@@ -270,7 +285,7 @@ export default function Perfil() {
           </div>
         </div>
         <h1 className="absolute right-0 text-secondary text-base md:text-xl xl:text-2xl font-bold text-right px-[60px]">
-          {equip ? (
+          {equip && equip.length <= 1 ? (
             `${equip}`
           ) : (
             <Button
@@ -279,7 +294,7 @@ export default function Perfil() {
               type="button"
               radius="full"
               className="w-1/3 min-w-32 mb-2 text-white"
-              // onClick={() => router.push("/masajista/listaEquipos")}
+              onClick={() => router.push("/masajista/listaEquipos")}
             >
               {"Equipos"}
               <svg
@@ -481,34 +496,29 @@ export default function Perfil() {
                     size="md"
                     radius="md"
                     placeholder="Seleccione un Rol"
-                    defaultItems={acciones}
-                    defaultSelectedKey={formData.acciones}
-                    onSelectionChange={(value) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        acciones: value as string,
-                      }))
-                    }
+                    defaultItems={formData.acciones}
+                    defaultSelectedKey={formData.acciones[0]}
+                    onSelectionChange={(value) => setAcciones(value as string)}
                     classNames={{
                       base: "font-bold",
                     }}
                   >
-                    {acciones.map((option) => (
+                    {formData.acciones.map((option) => (
                       <AutocompleteItem
-                        key={option.value}
-                        value={option.label}
+                        key={option}
+                        value={option}
                         classNames={{
                           selectedIcon: "text-secondary",
                         }}
                       >
-                        {option.label}
+                        {option}
                       </AutocompleteItem>
                     ))}
                   </Autocomplete>
                   <Input
                     isReadOnly={isReadOnly}
                     variant="underlined"
-					type="number"
+                    type="number"
                     label="Experiencia"
                     placeholder="10.25"
                     name="experiencia"
