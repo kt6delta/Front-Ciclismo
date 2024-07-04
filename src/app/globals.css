@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* butons */
+.primary-button {
+    @apply font-medium shadow-button text-xl px-6 py-4 w-full min-w-[200px] rounded-default bg-primary text-primary-foreground;
+}
+/* general */
+.page-container {
+    @apply max-w-[1440px] w-full min-h-full px-bl sm:px-sml md:px-mdl xl:px-lgl;
+}
