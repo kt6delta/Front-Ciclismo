@@ -82,18 +82,17 @@ export const TableList = () => {
     switch (columnKey) {
       case "equipo":
         return (
-          <User
-            avatarProps={{ radius: "lg", src: user.avatar }}
-            name={cellValue}
-          >
-            {user.masajista}
-          </User>
+          <div className="flex flex-col">
+            <p className="text-xl capitalize">{cellValue}</p>
+          </div>
+          
+
         );
       case "tiempo":
       case "id":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
+            <p className="text-bold  capitalize">{cellValue}</p>
           </div>
         );
       default:
@@ -135,7 +134,7 @@ export const TableList = () => {
   const topContent = React.useMemo(() => {
     return (
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between gap-3 items-end">
+        <div className="flex justify-center gap-3 items-end">
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
@@ -169,12 +168,15 @@ export const TableList = () => {
             </Dropdown>
           </div>
         </div>
+        <div className="flex flex-col">
+            <p className="text-bold text-xl capitalize font-extrabold ml-8 ">RESULTADOS DE CARRERA</p>
+          </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} equipos</span>
-          <label className="flex items-center text-default-400 text-small">
-            Rows per page:
+          <span className="text-default-400 text-small ml-6">Total {users.length} equipos</span>
+          <label className="flex items-center text-default-400 text-small mr-12">
+             Rows per page: 
             <select
-              className="bg-transparent outline-none text-default-400 text-small"
+              className="bg-transparent outline-none text-default-400 text-small ml-2"
               onChange={onRowsPerPageChange}
             >
               <option value="100">100</option>
