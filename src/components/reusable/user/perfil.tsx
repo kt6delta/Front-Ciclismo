@@ -14,6 +14,8 @@ import {
   countries,
   especialidad,
   sexos,
+  paises,
+  accion
 } from "@/utils/constantes/data";
 import axios from "axios";
 
@@ -496,7 +498,7 @@ export default function Perfil() {
                     size="md"
                     radius="md"
                     placeholder="Seleccione un Rol"
-                    defaultItems={formData.acciones}
+                    defaultItems={accion}
                     defaultSelectedKey={formData.acciones[0]}
                     onSelectionChange={(value) => setAcciones(value as string)}
                     classNames={{
@@ -565,7 +567,7 @@ export default function Perfil() {
                   size="md"
                   radius="md"
                   placeholder="Seleccione un Nacionalidad"
-                  defaultItems={countries}
+                  defaultItems={paises}
                   onSelectionChange={(value) =>
                     setFormData((prev) => ({
                       ...prev,

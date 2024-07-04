@@ -1,4 +1,4 @@
-export const DashBoard = () => {
+const DashBoard = () => {
     return (
         <>
             <div className='bg-primary text-background flex justify-center w-full min-h-[5vh]
@@ -7,3 +7,4 @@ export const DashBoard = () => {
         </>
     )
 }
+export default DashBoard;

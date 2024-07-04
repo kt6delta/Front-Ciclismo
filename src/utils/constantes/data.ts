@@ -1,6 +1,10 @@
 import { getNames } from 'country-list';
 
 export const countries = getNames();
+export const paises = countries.map((countryName) => ({
+  label: countryName,
+  value: countryName,
+}));
 
 export const rol = [
   { label: "Ciclista", value: "1" },
@@ -26,6 +30,15 @@ export const contexturas = [
 ]
 
 export const especialidad = [
+  { label: "Escaladores", value: "1", recomendar: "se recomienda contextura muy delgada" },
+  { label: "Contrarelojistas", value: "6", recomendar: "se recomienda contextura delgada" },
+  { label: "Gregarios", value: "4", recomendar: "se recomienda contextura media" },
+  { label: "Clasicomanos", value: "5", recomendar: "se recomienda contextura media" },
+  { label: "Rodadores", value: "2", recomendar: "se recomienda contextura corpulenta" },
+  { label: "Sprinters", value: "3", recomendar: "se recomienda contextura muy corpulenta" },
+];
+
+export const accion = [
   { label: "Escaladores", value: "1", recomendar: "se recomienda contextura muy delgada" },
   { label: "Contrarelojistas", value: "6", recomendar: "se recomienda contextura delgada" },
   { label: "Gregarios", value: "4", recomendar: "se recomienda contextura media" },
