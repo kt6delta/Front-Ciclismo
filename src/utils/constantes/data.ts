@@ -1,6 +1,16 @@
 import { getNames } from 'country-list';
 
 export const countries = getNames();
+export const paises = countries.map((countryName) => ({
+  label: countryName,
+  value: countryName,
+}));
+
+export const masajista = [
+  { label: "Masajista1", value: "1" },//cedula
+  { label: "Masajista2", value: "2" },
+  { label: "Masajista3", value: "3" }
+];
 
 export const rol = [
   { label: "Ciclista", value: "1" },

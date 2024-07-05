@@ -87,6 +87,7 @@ const config: Config = {
       themes: {
         light: {
           colors: {
+            content1: 'rgba(0, 53, 61, 0.4)',
             background: '#fafafa',
             primary: {
               600: "rgba(92, 225, 183, 0.6)",

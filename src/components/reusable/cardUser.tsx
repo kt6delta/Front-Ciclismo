@@ -1,40 +1,59 @@
-import React from 'react';
-import { User } from "@nextui-org/react";
-import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
+import React from "react";
+import { Card,  Image } from "@nextui-org/react";
 
 type CardUserProps = {
-    nombre: string;
-    especialidad: string;
-    tiempoAcomulado: string;
-    genero: string;
-    contextura: string;
+  nombre: string;
+  especialidad: string;
+  tiempoAcomulado: string;
+  genero: string;
+  contextura: string;
 };
 
-export const CardUser = ({ nombre, especialidad, tiempoAcomulado, genero, contextura }: CardUserProps) => {
-    return (
-        <div className='p-2'>
-            <Card className="py-2 w-96 min-h-24 h-24 flex flex-row items-center bg-primary-100">
-                <div className="flex-shrink-0 p-4">
-                    <Image
-                        alt="Card background"
-                        className="object-cover rounded-full"
-                        src="../../../avatar.png"
-                        width={80}
-                        height={80}
-                    />
-                </div>
-                <div className="p-0 pl-1 flex flex-col justify-center min-w-40 ">
-                    <p className="font-bold text-large text-xl">{nombre}</p>
-                    <small className="text-default-700 mt-1">{especialidad}</small>
-                    <small className="text-default-700">{tiempoAcomulado}</small>
-
-                </div>
-                <div className="p-0 flex flex-col justify-start">
-                    <small className="text-default-700">{genero}</small>
-                    <small className="text-default-700">{contextura}</small>
-                </div>
-            </Card>
-
-        </div>
-    );
-}
+export const CardUser = ({
+  nombre,
+  especialidad,
+  tiempoAcomulado,
+  genero,
+  contextura,
+}: CardUserProps) => {
+  return (
+    <>
+      <div className="md:text-left">
+        <Card className="p-2 w-full grid grid-flow-row md:grid-flow-col gap-2 bg-primary-100">
+          <div className="flex items-center justify-center">
+            <Image
+              alt="Card background"
+              className="object-cover rounded-full"
+              src="/avatar.png"
+              width={70}
+              height={70}
+            />
+          </div>
+          <div className="grid">
+            <p className="font-bold text-small md:text-medium text-center">
+              {nombre}
+            </p>
+            <div className="grid grid-flow-col gap-2">
+              <div>
+                <p className="text-black text-sm md:text-[14px] text-center md:text-left">
+                  {especialidad}
+                </p>
+                <p className="text-black text-sm md:text-[14px] text-center md:text-left">
+                  {tiempoAcomulado}
+                </p>
+              </div>
+              <div>
+                <p className="text-black text-sm md:text-[14px] text-center md:text-left">
+                  {genero}
+                </p>
+                <p className="text-black text-sm md:text-[14px] text-center md:text-left">
+                  {contextura}
+                </p>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </>
+  );
+};
