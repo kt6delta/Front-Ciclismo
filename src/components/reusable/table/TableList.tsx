@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
+import axios from "axios";
 import {
   Table,
   TableHeader,
@@ -12,7 +13,6 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem,
-  User,
   Pagination,
 } from "@nextui-org/react";
 import { PlusIcon } from "./PlusIcon";
@@ -24,28 +24,44 @@ import { capitalize } from "./utils";
 
 const INITIAL_VISIBLE_COLUMNS = ["pais", "equipo", "tiempo"];
 
-
-
 export const TableList = () => {
-  const [filterValue, setFilterValue] = React.useState("");
-  const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
-  const [statusFilter, setStatusFilter] = React.useState("all");
-  const [rowsPerPage, setRowsPerPage] = React.useState(100);
-  const [sortDescriptor, setSortDescriptor] = React.useState({
+  const [filterValue, setFilterValue] = useState("");
+  const [visibleColumns, setVisibleColumns] = useState(new Set(INITIAL_VISIBLE_COLUMNS));
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [rowsPerPage, setRowsPerPage] = useState(100);
+  const [sortDescriptor, setSortDescriptor] = useState({
     column: "tiempo",
     direction: "ascending",
   });
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1);
+  const [countries, setCountries] = useState([]);
+  const [flagMap, setFlagMap] = useState({});
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  useEffect(() => {
+    // Fetch countries data
+    axios.get("https://restcountries.com/v3.1/all")
+      .then(response => {
+        const map = {};
+        response.data.forEach((country: { name: { common: string; }; flags: { png: any; }; }) => {
+          map[country.name.common.toLowerCase()] = country.flags.png;
+        });
+        setFlagMap(map);
+        setCountries(response.data);
+        setDataLoaded(true); // Set data loaded to true after fetching data
+      })
+      .catch(error => console.error("Error fetching countries data:", error));
+  }, []);
 
   const hasSearchFilter = Boolean(filterValue);
 
-  const headerColumns = React.useMemo(() => {
+  const headerColumns = useMemo(() => {
     if (visibleColumns.has("all")) return columns;
 
     return columns.filter((column) => Array.from(visibleColumns).includes(column.uid));
   }, [visibleColumns]);
 
-  const filteredItems = React.useMemo(() => {
+  const filteredItems = useMemo(() => {
     let filteredUsers = [...users];
 
     if (hasSearchFilter) {
@@ -59,14 +75,14 @@ export const TableList = () => {
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
-  const items = React.useMemo(() => {
+  const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
     return filteredItems.slice(start, end);
   }, [page, filteredItems, rowsPerPage]);
 
-  const sortedItems = React.useMemo(() => {
+  const sortedItems = useMemo(() => {
     return [...items].sort((a, b) => {
       const first = a[sortDescriptor.column];
       const second = b[sortDescriptor.column];
@@ -76,48 +92,55 @@ export const TableList = () => {
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = React.useCallback((user, columnKey) => {
+  const renderCell = useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
 
     switch (columnKey) {
+      case "pais":
+        return (
+          <div className="flex items-center">
+            {flagMap[user.pais.toLowerCase()] && (
+              <img src={flagMap[user.pais.toLowerCase()]} alt={`${user.pais} flag`} width={24} height={16} />
+            )}
+            <span className="ml-2">{user.pais}</span>
+          </div>
+        );
       case "equipo":
         return (
           <div className="flex flex-col">
             <p className="text-xl capitalize">{cellValue}</p>
           </div>
-          
-
         );
       case "tiempo":
       case "id":
         return (
           <div className="flex flex-col">
-            <p className="text-bold  capitalize">{cellValue}</p>
+            <p className="text-bold capitalize">{cellValue}</p>
           </div>
         );
       default:
         return cellValue;
     }
-  }, []);
+  }, [flagMap]);
 
-  const onNextPage = React.useCallback(() => {
+  const onNextPage = useCallback(() => {
     if (page < pages) {
       setPage(page + 1);
     }
   }, [page, pages]);
 
-  const onPreviousPage = React.useCallback(() => {
+  const onPreviousPage = useCallback(() => {
     if (page > 1) {
       setPage(page - 1);
     }
   }, [page]);
 
-  const onRowsPerPageChange = React.useCallback((e: { target: { value: any; }; }) => {
+  const onRowsPerPageChange = useCallback((e) => {
     setRowsPerPage(Number(e.target.value));
     setPage(1);
   }, []);
 
-  const onSearchChange = React.useCallback((value: React.SetStateAction<string>) => {
+  const onSearchChange = useCallback((value) => {
     if (value) {
       setFilterValue(value);
       setPage(1);
@@ -126,12 +149,12 @@ export const TableList = () => {
     }
   }, []);
 
-  const onClear = React.useCallback(() => {
+  const onClear = useCallback(() => {
     setFilterValue("");
     setPage(1);
   }, []);
 
-  const topContent = React.useMemo(() => {
+  const topContent = useMemo(() => {
     return (
       <div className="flex flex-col gap-4">
         <div className="flex justify-center gap-3 items-end">
@@ -169,12 +192,12 @@ export const TableList = () => {
           </div>
         </div>
         <div className="flex flex-col">
-            <p className="text-bold text-xl capitalize font-extrabold ml-8 ">RESULTADOS DE CARRERA</p>
-          </div>
+          <p className="text-bold text-xl capitalize font-extrabold ml-8">RESULTADOS DE CARRERA</p>
+        </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small ml-6">Total {users.length} equipos</span>
           <label className="flex items-center text-default-400 text-small mr-12">
-             Rows per page: 
+            Rows per page:
             <select
               className="bg-transparent outline-none text-default-400 text-small ml-2"
               onChange={onRowsPerPageChange}
@@ -189,7 +212,7 @@ export const TableList = () => {
     );
   }, [filterValue, statusFilter, visibleColumns, onRowsPerPageChange, users.length, onSearchChange, hasSearchFilter]);
 
-  const bottomContent = React.useMemo(() => {
+  const bottomContent = useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
         <Pagination
@@ -212,6 +235,10 @@ export const TableList = () => {
       </div>
     );
   }, [items.length, page, pages, hasSearchFilter]);
+
+  if (!dataLoaded) {
+    return <div>Loading...</div>; // Show a loading indicator until data is loaded
+  }
 
   return (
     <Table
@@ -238,7 +265,7 @@ export const TableList = () => {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody emptyContent={"Equipo no encontrado"} items={sortedItems}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
