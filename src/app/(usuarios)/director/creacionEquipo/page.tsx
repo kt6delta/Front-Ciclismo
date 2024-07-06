@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { DragList } from "@/components/CardDrop/DragList";
 import { Title } from "@/components/reusable/title";
+import { IoSearch } from "react-icons/io5";
 import { CardWrapper } from "@/components/reusable/CardWrapper";
 import {
   Autocomplete,
@@ -12,6 +13,7 @@ import {
 import { paises, masajista } from "@/utils/constantes/data";
 
 export const creacionEquipo = () => {
+  const [search, setSearch] = useState("");
   const [formData, setFormData] = useState({
     nacionalidad: "",
     nombre: "",
@@ -29,20 +31,22 @@ export const creacionEquipo = () => {
   return (
     <>
       <div className="flex flex-col gap-5 mb-5">
-        <Title
-          className="text-center"
-          mesage="CREACION DE EQUIPO"
-        />
+        <Title className="text-center" mesage="CREACION DE EQUIPO" />
         <div className="grid grid-cols-2 gap-5">
-        <Title
-          className=""
-          mesage="CICLISTAS"
-        />
-        <div className="flex justify-end items-center">
-        <Title
-          mesage="SEARCH"
-        />
-        </div>
+          <Title className="" mesage="CICLISTAS" />
+          <div className="flex justify-end items-center">
+            <Input className="border-1 border-content1 rounded-default w-1/2"
+              type="text"
+              placeholder="ciclista1"
+              radius="full"
+              labelPlacement="outside"
+              value={search}
+              onValueChange={setSearch}
+              startContent={
+                <IoSearch className="w-6 h-6"/>
+              }
+            />
+          </div>
         </div>
       </div>
       <div className="grid gap-x-5 gap-y-5  md:gap-x-10 lg:gap-x-14 grid-cols-2 lg:grid-cols-3 rounded-default min-w-[400px]">
@@ -50,7 +54,7 @@ export const creacionEquipo = () => {
         <div className="col-span-2 lg:col-span-1 ">
           <div className="flex flex-col md:block">
             <Title
-              className="text-center text-small md:text-small lg:text-small"
+              className="text-center text-small sm:text-small md:text-small lg:text-xl xl:text-xl"
               mesage="DATOS EQUIPO"
             />
             <CardWrapper className="bg-background p-3 md:p-5 lg:p-7 rounded-default border-1 border-content1 shadow-button">

@@ -1,11 +1,9 @@
 "use client";
-import React from "react";
-import { useCallback, useEffect, useState } from "react";
+import React ,{useEffect} from "react";
+import { useState } from "react";
 import { DraggableElement } from "@/components/CardDrop/DraggableElement";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { Title } from "@/components/reusable/title";
 import { Todo, TodosStatus } from "@/utils/interfaces/types";
-import InputField from "./Inputfield";
 
 export const DragList = () => {
   const DISPONIBLES = [
@@ -52,29 +50,26 @@ export const DragList = () => {
       tiempo: "10",
     },
   ];
-
-  const [name, setName] = useState<string>("");
+  const [DropID1, setDropID1] = useState(
+    TodosStatus.DisponiblesTodos as string
+  );
+  const [DropID2, setDropID2] = useState(TodosStatus.AgregadosTodos as string);
   const [disponiblesTodos, setDisponiblesTodos] = useState<Todo[]>([]);
   const [agregadosTodos, setAgregadosTodos] = useState<Todo[]>([]);
 
+  const [hijosMontados, setHijosMontados] = useState(0);
+  
   useEffect(() => {
-    // setDisponiblesTodos(DISPONIBLES);
-    // setAgregadosTodos(AGREGADOS);
-  }, []);
+    if(hijosMontados === 1 || hijosMontados === 2){    
+      setDisponiblesTodos(DISPONIBLES);
+      setAgregadosTodos(AGREGADOS);
+      setDropID1(TodosStatus.DisponiblesTodos.toLowerCase());
+      setDropID2(TodosStatus.AgregadosTodos.toLowerCase());}
+  }, [hijosMontados]);
 
-  const addNewTodo = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newTodo = {
-      id:  Date.now(),
-      nombre: "Cata Preci",
-      especialidad: "sprinter",
-      genero: "Femenino",
-      contextura: "delgada",
-      tiempo: "10",
-    };
-
-    setDisponiblesTodos([...disponiblesTodos, newTodo]);
-    setName("");
+  const notificarMontaje = (num :number) => {
+    console.log("montado", num);
+    setHijosMontados(num);
   };
 
   const onDragEndHandler = (result: DropResult) => {
@@ -91,11 +86,11 @@ export const DragList = () => {
       disponibles = disponiblesTodos,
       agregados = agregadosTodos;
     switch (source.droppableId) {
-      case TodosStatus.DisponiblesTodos:
+      case DropID1:
         add = disponiblesTodos[source.index];
         disponibles.splice(source.index, 1);
         break;
-      case TodosStatus.AgregadosTodos:
+      case DropID2:
         add = agregadosTodos[source.index];
         agregados.splice(source.index, 1);
         break;
@@ -103,10 +98,10 @@ export const DragList = () => {
 
     if (add) {
       switch (destination.droppableId) {
-        case TodosStatus.DisponiblesTodos:
+        case DropID1:
           disponibles.splice(destination.index, 0, add);
           break;
-        case TodosStatus.AgregadosTodos:
+        case DropID2:
           agregados.splice(destination.index, 0, add);
           break;
       }
@@ -123,21 +118,18 @@ export const DragList = () => {
       window.localStorage.setItem("AgregadosTodos", JSON.stringify(agregados));
     }
   };
-
   return (
     <>
-    <InputField name={name} setName={setName} addNewTodo={addNewTodo} />
       <DragDropContext onDragEnd={onDragEndHandler}>
-            <Title
-              className="text-center text-small md:text-small lg:text-small"
-              mesage='titulo'
-            />
-            <DraggableElement
-              disponiblesTodos={disponiblesTodos}
-              setDisponiblesTodos={setDisponiblesTodos}
-              agregadosTodos={agregadosTodos}
-              setAgregadosTodos={setAgregadosTodos}
-            />
+        <DraggableElement 
+          DropID1={DropID1}
+          DropID2={DropID2}
+          disponiblesTodos={disponiblesTodos}
+          setDisponiblesTodos={setDisponiblesTodos}
+          agregadosTodos={agregadosTodos}
+          setAgregadosTodos={setAgregadosTodos}
+          onMontado={notificarMontaje}
+        />
       </DragDropContext>
     </>
   );
