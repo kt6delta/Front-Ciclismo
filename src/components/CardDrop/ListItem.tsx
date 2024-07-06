@@ -44,7 +44,6 @@ export const ListItem: FC<Props> = ({ index, todo, todos, setTodos }) => {
             {...draggableProvided.dragHandleProps}
             ref={draggableProvided.innerRef}
           >
-            {todo.id}
             <CardUser
               nombre={todo.nombre}
               especialidad={todo.especialidad || ""}
