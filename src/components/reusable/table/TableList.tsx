@@ -43,14 +43,18 @@ export const TableList = () => {
     axios.get("https://restcountries.com/v3.1/all")
       .then(response => {
         const map = {};
-        response.data.forEach((country: { name: { common: string; }; flags: { png: any; }; }) => {
+        response.data.forEach(country => {
           map[country.name.common.toLowerCase()] = country.flags.png;
         });
         setFlagMap(map);
         setCountries(response.data);
         setDataLoaded(true); // Set data loaded to true after fetching data
+        console.log("Countries data loaded", response.data); // Debugging line
       })
-      .catch(error => console.error("Error fetching countries data:", error));
+      .catch(error => {
+        console.error("Error fetching countries data:", error);
+        setDataLoaded(true); // Ensure dataLoaded is true even if there's an error to avoid infinite loading
+      });
   }, []);
 
   const hasSearchFilter = Boolean(filterValue);
