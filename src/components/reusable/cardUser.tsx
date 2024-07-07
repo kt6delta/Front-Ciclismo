@@ -21,7 +21,7 @@ export const CardUser = ({
   return (
     <>
       <div className="md:text-left">
-        <Card className="p-2 w-full grid grid-flow-row md:grid-flow-col gap-2 bg-primary-100">
+        <Card className="p-2 w-full grid grid-flow-row md:grid-flow-col gap-2 bg-secondary-100">
           <div className="flex items-center justify-center">
             <Image
               alt="Card background"

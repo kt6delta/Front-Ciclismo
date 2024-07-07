@@ -91,19 +91,12 @@ const config: Config = {
             background: '#fafafa',
             primary: {
               600: "rgba(0, 91, 196, 0.6)",
-              50: "#E6F1FE",
-              300:"#66AAF9",
-              400:"#338EF7",
-              100:"#CCE3FD",
-              200:"#99C7FB",
               foreground: "#fafafa",
               DEFAULT: "#006FEE"
             },
             secondary: {
-              50: 'rgba(254, 231, 239, 0.05)',
-              100: 'rgba(253, 208, 223, 0.1)',
-              300: 'rgba(0, 23, 49, 0.6)',
-              600: 'rgba(194, 14, 77, 0.6)',
+              50: '#FEE7EF',
+              100: '#CCE3FD',
               DEFAULT: "#001731",
               foreground: "#fafafa",
             },
