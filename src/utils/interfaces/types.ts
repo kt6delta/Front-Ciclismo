@@ -29,6 +29,7 @@ type Todo = {
   genero?: string;
   contextura?: string;
   tiempo?: string;
+  img?: string;
 };
 
 type ListType = {

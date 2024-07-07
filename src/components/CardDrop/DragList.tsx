@@ -1,14 +1,15 @@
 "use client";
-import React ,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { DraggableElement } from "@/components/CardDrop/DraggableElement";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { Todo, TodosStatus } from "@/utils/interfaces/types";
+import { img } from "@/utils/constantes/data";
 
 export const DragList = () => {
-  const DISPONIBLES = [
+  let DISPONIBLES = [
     {
-      id: 1,
+      id: 1, //cedula
       nombre: "Cata Preci",
       especialidad: "sprinter",
       genero: "Femenino",
@@ -32,7 +33,7 @@ export const DragList = () => {
       tiempo: "10",
     },
   ];
-  const AGREGADOS = [
+  let AGREGADOS = [
     {
       id: 4,
       nombre: "Cata Preci",
@@ -58,16 +59,20 @@ export const DragList = () => {
   const [agregadosTodos, setAgregadosTodos] = useState<Todo[]>([]);
 
   const [hijosMontados, setHijosMontados] = useState(0);
-  
   useEffect(() => {
-    if(hijosMontados === 1 || hijosMontados === 2){    
+    if (hijosMontados === 1 || hijosMontados === 2) {
+      DISPONIBLES = DISPONIBLES.map((item) => ({
+        ...item,
+        img: img[Math.floor(Math.random() * img.length)],
+      }));
       setDisponiblesTodos(DISPONIBLES);
       setAgregadosTodos(AGREGADOS);
       setDropID1(TodosStatus.DisponiblesTodos.toLowerCase());
-      setDropID2(TodosStatus.AgregadosTodos.toLowerCase());}
+      setDropID2(TodosStatus.AgregadosTodos.toLowerCase());
+    }
   }, [hijosMontados]);
 
-  const notificarMontaje = (num :number) => {
+  const notificarMontaje = (num: number) => {
     console.log("montado", num);
     setHijosMontados(num);
   };
@@ -121,7 +126,7 @@ export const DragList = () => {
   return (
     <>
       <DragDropContext onDragEnd={onDragEndHandler}>
-        <DraggableElement 
+        <DraggableElement
           DropID1={DropID1}
           DropID2={DropID2}
           disponiblesTodos={disponiblesTodos}

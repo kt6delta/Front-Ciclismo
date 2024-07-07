@@ -21,7 +21,7 @@ export const DraggableElement: FC<Props> = ({
   setDisponiblesTodos,
   agregadosTodos,
   setAgregadosTodos,
-  onMontado
+  onMontado,
 }) => {
   useEffect(() => {
     onMontado(1);

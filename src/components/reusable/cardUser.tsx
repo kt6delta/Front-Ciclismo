@@ -7,6 +7,7 @@ type CardUserProps = {
   tiempoAcomulado: string;
   genero: string;
   contextura: string;
+  img?: string;
 };
 
 export const CardUser = ({
@@ -15,6 +16,7 @@ export const CardUser = ({
   tiempoAcomulado,
   genero,
   contextura,
+  img,
 }: CardUserProps) => {
   return (
     <>
@@ -24,7 +26,7 @@ export const CardUser = ({
             <Image
               alt="Card background"
               className="object-cover rounded-full"
-              src="/avatar.png"
+              src={img || '/avatar.png'}
               width={70}
               height={70}
             />
@@ -35,7 +37,7 @@ export const CardUser = ({
             </p>
             <div className="grid grid-flow-col gap-2">
               <div>
-                <p className="text-black text-sm md:text-[14px] text-center md:text-left">
+                <p className="text-black text-sm md:text-[14px] text-center md:text-left font-semibold">
                   {especialidad}
                 </p>
                 <p className="text-black text-sm md:text-[14px] text-center md:text-left">

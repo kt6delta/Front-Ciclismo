@@ -47,6 +47,7 @@ export const ListItem: FC<Props> = ({ index, todo, todos, setTodos,  onMontado }
               tiempoAcomulado={todo.tiempo || ""}
               genero={todo.genero || ""}
               contextura={todo.contextura || ""}
+              img={todo.img} //random img 0-4
             />
             <div className="flex justify-end">
               <button type="submit">
