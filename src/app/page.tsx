@@ -6,7 +6,7 @@ import { Header } from '@/components/reusable/user/Header';
 import { Card, CardBody } from "@nextui-org/react";
 import { TableList } from '@/components/reusable/table/TableList';
 
-import { CardUser } from '@/components/reusable/cardUser';
+import { CardUser } from '@/components/reusable/user/cardUser';
 
 // import { toast } from "react-toastify";
 import axios from "axios";

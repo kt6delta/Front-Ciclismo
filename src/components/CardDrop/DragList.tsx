@@ -6,7 +6,9 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { Todo, TodosStatus } from "@/utils/interfaces/types";
 import { img } from "@/utils/constantes/data";
 
+
 export const DragList = () => {
+
   let DISPONIBLES = [
     {
       id: 1, //cedula

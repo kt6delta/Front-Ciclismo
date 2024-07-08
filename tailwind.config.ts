@@ -65,12 +65,8 @@ const config: Config = {
         'bold': '700',
       },
       backgroundColor: {
-        'primary': {
-          'DEFAULT': '#006FEE',
-        },
-        'secondary': '#ffffff',
-        'success': '#5ce1b7',
-        'warning': '#f5a623',
+        'primary':  '#006FEE',
+        'secondary': '#001731',
       },
     },
   },
@@ -95,14 +91,11 @@ const config: Config = {
               DEFAULT: "#006FEE"
             },
             secondary: {
-              50: '#FEE7EF',
               100: '#CCE3FD',
               DEFAULT: "#001731",
               foreground: "#fafafa",
             },
-            success: "#5ce1b7",
             danger: "#ffffff", //whithe
-            warning: "#f5a623",
           },
         },
         dark: {},

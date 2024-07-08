@@ -5,7 +5,7 @@ import React, {
   SetStateAction,
 } from "react";
 import { Draggable } from "react-beautiful-dnd";
-import { CardUser } from "@/components/reusable/cardUser";
+import { CardUser } from "@/components/reusable/user/cardUser";
 import { Todo } from "@/utils/interfaces/types";
 import { FaPencilAlt } from "react-icons/fa";
 
