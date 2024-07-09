@@ -5,8 +5,10 @@ import { FooterPage } from '@/components/reusable/user/FooterPage';
 import { Header } from '@/components/reusable/user/Header';
 import { Card, CardBody } from "@nextui-org/react";
 import { TableList } from '@/components/reusable/table/TableList';
+
 import { MenuAdmin } from '@/components/reusable/admin/MenuAdmin';
-import { CardUser } from '@/components/reusable/cardUser';
+import { CardUser } from '@/components/reusable/user/cardUser';
+
 // import { toast } from "react-toastify";
 import axios from "axios";
 

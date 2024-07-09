@@ -12,6 +12,7 @@ import {
 	especialidad, //sino lo llena 0
 	sexos,
 	countries,
+	paises,
 } from "@/utils/constantes/data";
 
 //patron estrategia
@@ -303,7 +304,7 @@ export default function Registro() {
 											size="md"
 											radius="md"
 											placeholder="Seleccione un Nacionalidad"
-											defaultItems={countries}
+											defaultItems={paises}
 											onSelectionChange={(value) =>
 												setFormData((prev) => ({
 													...prev,
@@ -374,7 +375,7 @@ export default function Registro() {
 												tabIndex={0}
 												className={`flex items-center justify-center text-small text-secondary font-light py-3 px-4 border-1 border-secondary-300 rounded-default cursor-pointer w-full text-center 
                     transition-all ease-in-out duration-300 
-                    ${formData.sexo === option ? "bg-primary" : ""} 
+                    ${formData.sexo === option ? "bg-primary text-white" : ""} 
                     outline-secondary`}
 												onKeyDown={(event) =>
 													event.key === "Enter" &&

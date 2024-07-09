@@ -35,7 +35,7 @@ export const Loading: React.FC<LoadingProps> = ({ children }) => {
                 <div className='lg:w-full'>
                     <CardWrapper className='p-0'>
                         <Header/>
-                        <div className="p-10">
+                        <div className="bg-white p-10">
                         {children}
                         </div>
                         <FooterPage />

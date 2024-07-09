@@ -4,7 +4,7 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
 
   return (
     <>
-      <div className="mx-auto page-container">cls
+      <div className="mx-auto page-container">
         <MenuAdmin>
           {children}
         </MenuAdmin>

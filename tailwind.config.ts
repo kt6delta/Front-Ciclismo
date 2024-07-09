@@ -65,12 +65,8 @@ const config: Config = {
         'bold': '700',
       },
       backgroundColor: {
-        'primary': {
-          'DEFAULT': '#5CE1B7',
-        },
-        'secondary': '#00353D',
-        'success': '#5ce1b7',
-        'warning': '#f5a623',
+        'primary':  '#006FEE',
+        'secondary': '#001731',
       },
     },
   },
@@ -87,29 +83,19 @@ const config: Config = {
       themes: {
         light: {
           colors: {
+            content1: 'rgba(0, 23, 49, 0.4)',
             background: '#fafafa',
             primary: {
-              600: "rgba(92, 225, 183, 0.6)",
-              50: "#E8FAF0",
-              300:"#74DFA2",
-              400:"#45D483",
-              100:"#D1F4E0",
-              200:"#A2E9C1",
-              500:"#17C964",
+              600: "rgba(0, 91, 196, 0.6)",
               foreground: "#fafafa",
-              DEFAULT: "#5CE1B7"
+              DEFAULT: "#006FEE"
             },
             secondary: {
-              50: 'rgba(0, 53, 61, 0.05)',
-              100: 'rgba(0, 53, 61, 0.1)',
-              300: 'rgba(0, 53, 61, 0.3)',
-              600: 'rgba(0, 53, 61, 0.6)',
-              DEFAULT: "#00353d",
+              100: '#CCE3FD',
+              DEFAULT: "#001731",
               foreground: "#fafafa",
             },
-            success: "#5ce1b7",
             danger: "#ffffff", //whithe
-            warning: "#f5a623",
           },
         },
         dark: {},

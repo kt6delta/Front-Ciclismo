@@ -6,7 +6,7 @@ interface CardWrapperProps {
 export const CardWrapper = ({children, className } : CardWrapperProps) => {
     
     return(
-        <div className={`${className} rounded-default shadow-card w-full`}>
+        <div className={`rounded-default shadow-card w-full ${className}`}>
             {children}
         </div>
     )
