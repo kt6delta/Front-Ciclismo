@@ -10,7 +10,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { FaMinusCircle } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
 
-const Carrera = () => {
+export default function  Carrera() {
   const [search, setSearch] = useState("");
   const router = useRouter();
 
@@ -97,4 +97,3 @@ const Carrera = () => {
   );
 };
 
-export default Carrera;
