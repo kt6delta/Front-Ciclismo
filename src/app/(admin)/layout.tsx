@@ -1,13 +1,15 @@
-import { MenuAdmin } from '@/components/reusable/admin/MenuAdmin';
+import { MenuAdmin } from "@/components/reusable/admin/MenuAdmin";
 
-export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
-
+export default function AdminLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <div className="mx-auto page-container">cls
-        <MenuAdmin>
+      <div className="bg-background">
+      <MenuAdmin />
+        <div className="mx-auto page-container">
           {children}
-        </MenuAdmin>
+        </div>
       </div>
     </>
   );

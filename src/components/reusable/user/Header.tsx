@@ -11,7 +11,7 @@ export const Header = () => {
                         <DropdownTrigger>
                             <Button className="bg-primary h-16 w-16">
                                 <Image
-                                    src="../../../menu.png"  // Ruta a tu imagen
+                                    src="/menu.png"  // Ruta a tu imagen
                                     alt="Menu Icon"
                                     width={64}  // Ajusta el ancho de la imagen
                                     height={64}  // Ajusta la altura de la imagen

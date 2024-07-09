@@ -240,94 +240,98 @@ export default function Registro() {
                         ))}
                       </Autocomplete>
 
-                      <Autocomplete
-                        label="Contextura"
-                        color="secondary"
-                        variant="underlined"
-                        size="md"
-                        radius="md"
-                        placeholder="Seleccione un Rol"
-                        defaultItems={contexturas}
-                        onSelectionChange={(value) =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            contextura: value as string,
-                          }))
-                        }
-                        classNames={{
-                          base: "font-bold",
-                        }}
-                      >
-                        {contexturas.map((option) => (
-                          <AutocompleteItem
-                            key={option.value}
-                            value={option.label}
-                            classNames={{
-                              selectedIcon: "text-secondary",
-                            }}
-                          >
-                            {option.label}
-                          </AutocompleteItem>
-                        ))}
-                      </Autocomplete>
-                    </div>
-                  );
-                } else if (formData.rol === "2") {
-                  return (
-                    <Input
-                      isRequired={true}
-                      variant="underlined"
-                      label="Experiencia"
-                      placeholder="20 años"
-                      name="experiencia"
-                      value={formData.experiencia}
-                      onChange={handleChange}
-                      type="number"
-                      classNames={{
-                        base: "font-bold",
-                      }}
-                    />
-                  );
-                } else if (formData.rol === "3") {
-                  return (
-                    <Autocomplete
-                      label="Nacionalidad"
-                      color="secondary"
-                      variant="underlined"
-                      size="md"
-                      radius="md"
-                      placeholder="Seleccione un Nacionalidad"
-                      defaultItems={paises}
-                      onSelectionChange={(value) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          nacionalidad: value as string,
-                        }))
-                      }
-                      classNames={{
-                        base: "font-bold",
-                      }}
-                    >
-                      {countries.map((option: string) => (
-                        <AutocompleteItem
-                          key={option}
-                          value={option}
-                          classNames={{
-                            selectedIcon: "text-secondary",
-                          }}
-                        >
-                          {option}
-                        </AutocompleteItem>
-                      ))}
-                    </Autocomplete>
-                  );
-                }
-              })()}
-            </div>
-          </div>
-          <div className="flex w-full flex-col md:flex-nowrap gap-4">
-            <div
-              className="md:flex-nowrap 
+											<Autocomplete
+												label="Contextura"
+												color="secondary"
+												variant="underlined"
+												size="md"
+												radius="md"
+												placeholder="Seleccione un Rol"
+												defaultItems={contexturas}
+												onSelectionChange={(value) =>
+													setFormData((prev) => ({
+														...prev,
+														contextura:
+															value as string,
+													}))
+												}
+												classNames={{
+													base: "font-bold",
+												}}
+											>
+												{contexturas.map((option) => (
+													<AutocompleteItem
+														key={option.value}
+														value={option.label}
+														classNames={{
+															selectedIcon:
+																"text-secondary",
+														}}
+													>
+														{option.label}
+													</AutocompleteItem>
+												))}
+											</Autocomplete>
+										</div>
+									);
+								} else if (formData.rol === "2") {
+									return (
+										<Input
+											isRequired={true}
+											variant="underlined"
+											label="Experiencia"
+											placeholder="20 años"
+											name="experiencia"
+											value={formData.experiencia}
+											onChange={handleChange}
+											type="number"
+											classNames={{
+												base: "font-bold",
+											}}
+										/>
+									);
+								} else if (formData.rol === "3") {
+									return (
+										<Autocomplete
+											label="Nacionalidad"
+											color="secondary"
+											variant="underlined"
+											size="md"
+											radius="md"
+											placeholder="Seleccione un Nacionalidad"
+											defaultItems={paises}
+											onSelectionChange={(value) =>
+												setFormData((prev) => ({
+													...prev,
+													nacionalidad:
+														value as string,
+												}))
+											}
+											classNames={{
+												base: "font-bold",
+											}}
+										>
+											{countries.map((option: string) => (
+												<AutocompleteItem
+													key={option}
+													value={option}
+													classNames={{
+														selectedIcon:
+															"text-secondary",
+													}}
+												>
+													{option}
+												</AutocompleteItem>
+											))}
+										</Autocomplete>
+									);
+								}
+							})()}
+						</div>
+					</div>
+					<div className="flex w-full flex-col md:flex-nowrap gap-4">
+						<div
+							className="md:flex-nowrap 
           p-5 flex w-full flex-col gap-4"
             >
               {/* inputs */}
@@ -363,7 +367,7 @@ export default function Registro() {
                         tabIndex={0}
                         className={`flex items-center justify-center text-small text-secondary font-light py-3 px-4 border-1 border-secondary-300 rounded-default cursor-pointer w-full text-center 
                     transition-all ease-in-out duration-300 
-                    ${formData.sexo === option ? "bg-primary" : ""} 
+                    ${formData.sexo === option ? "bg-primary text-white" : ""} 
                     outline-secondary`}
                         onKeyDown={(event) =>
                           event.key === "Enter" &&

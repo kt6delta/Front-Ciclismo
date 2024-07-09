@@ -11,7 +11,7 @@ import {
 } from "@nextui-org/react";
 import {
   contexturas,
-  countries,
+  countries,paises,
   especialidad,
   sexos,
   paises,
@@ -30,7 +30,7 @@ type FormData = {
   experiencia: string;
   nacionalidad: string;
   tiempoAcumula: string;
-  acciones: string[];
+  acciones: { value: string; label: string }[];
   equipos: string[];
 };
 interface IForm {
@@ -149,7 +149,7 @@ export default function Perfil() {
     experiencia: "",
     nacionalidad: "",
     tiempoAcumula: "0",
-    acciones: [""],
+    acciones: [{ value: '', label: '' }],
     equipos: [""],
   });
   const [form, setForm] = useState<IForm | null>(null);
@@ -199,6 +199,10 @@ export default function Perfil() {
         }
         // Suponiendo que la respuesta tiene la estructura esperada para llenar formData
         const perfilData = response;
+        let accionesObject = perfilData.acciones.map((accion: any) => ({
+          label: accion,
+          value: accion
+        }));
         setFormData({
           rol: perfilData.rol_id.toString(),
           email: perfilData.email,
@@ -210,7 +214,7 @@ export default function Perfil() {
           experiencia: perfilData.experiencia || "",
           nacionalidad: perfilData.nacionalidad || "",
           tiempoAcumula: perfilData.tiempoAcumula || "0",
-          acciones: perfilData.acciones || [""],
+          acciones: accionesObject || [{ value: '', label: '' }],
           equipos: perfilData.equipos || [""], // un array de strings con los nombres de equipos
         });
       } catch (error) {
@@ -498,8 +502,7 @@ export default function Perfil() {
                     size="md"
                     radius="md"
                     placeholder="Seleccione un Rol"
-                    defaultItems={accion}
-                    defaultSelectedKey={formData.acciones[0]}
+                    defaultItems={formData.acciones}
                     onSelectionChange={(value) => setAcciones(value as string)}
                     classNames={{
                       base: "font-bold",
@@ -507,13 +510,13 @@ export default function Perfil() {
                   >
                     {formData.acciones.map((option) => (
                       <AutocompleteItem
-                        key={option}
-                        value={option}
+                        key={option.value}
+                        value={option.label}
                         classNames={{
                           selectedIcon: "text-secondary",
                         }}
                       >
-                        {option}
+                        {option.label}
                       </AutocompleteItem>
                     ))}
                   </Autocomplete>
