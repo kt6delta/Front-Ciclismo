@@ -12,7 +12,7 @@ import {
 } from "@nextui-org/react";
 import { paises, masajista } from "@/utils/constantes/data";
 
-export const creacionEquipo = () => {
+const CreacionEquipo = () => {
   const [search, setSearch] = useState("");
   const [formData, setFormData] = useState({
     nacionalidad: "",
@@ -35,16 +35,15 @@ export const creacionEquipo = () => {
         <div className="grid grid-cols-2 gap-5">
           <Title className="" mesage="CICLISTAS" />
           <div className="flex justify-end items-center">
-            <Input className="border-1 border-content1 rounded-default w-1/2"
+            <Input
+              className="border-1 border-content1 rounded-default w-1/2"
               type="text"
               placeholder="ciclista1"
               radius="full"
               labelPlacement="outside"
               value={search}
               onValueChange={setSearch}
-              startContent={
-                <IoSearch className="w-6 h-6"/>
-              }
+              startContent={<IoSearch className="w-6 h-6" />}
             />
           </div>
         </div>
@@ -155,4 +154,4 @@ export const creacionEquipo = () => {
     </>
   );
 };
-export default creacionEquipo;
+export default CreacionEquipo;

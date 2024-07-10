@@ -1,10 +1,8 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 import Ganador from "@/components/simulation/ganador";
 
-export default function ganar() {
-  const router = useRouter();
+export default function Ganar() {
 
   return (
     <>

@@ -11,11 +11,10 @@ import {
 } from "@nextui-org/react";
 import {
   contexturas,
-  countries,paises,
+  countries,
   especialidad,
   sexos,
-  paises,
-  accion
+  paises
 } from "@/utils/constantes/data";
 import axios from "axios";
 

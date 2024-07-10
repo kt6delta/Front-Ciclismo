@@ -9,50 +9,6 @@ import { img } from "@/utils/constantes/data";
 
 export const DragList = () => {
 
-  let DISPONIBLES = [
-    {
-      id: 1, //cedula
-      nombre: "Cata Preci",
-      especialidad: "sprinter",
-      genero: "Femenino",
-      contextura: "delgada",
-      tiempo: "10",
-    },
-    {
-      id: 2,
-      nombre: "Cata Preci",
-      especialidad: "sprinter",
-      genero: "Femenino",
-      contextura: "delgada",
-      tiempo: "10",
-    },
-    {
-      id: 3,
-      nombre: "Cata Preci",
-      especialidad: "sprinter",
-      genero: "Femenino",
-      contextura: "delgada",
-      tiempo: "10",
-    },
-  ];
-  let AGREGADOS = [
-    {
-      id: 4,
-      nombre: "Cata Preci",
-      especialidad: "sprinter",
-      genero: "Femenino",
-      contextura: "delgada",
-      tiempo: "10",
-    },
-    {
-      id: 5,
-      nombre: "Cata Preci",
-      especialidad: "sprinter",
-      genero: "Femenino",
-      contextura: "delgada",
-      tiempo: "10",
-    },
-  ];
   const [DropID1, setDropID1] = useState(
     TodosStatus.DisponiblesTodos as string
   );
@@ -62,6 +18,50 @@ export const DragList = () => {
 
   const [hijosMontados, setHijosMontados] = useState(0);
   useEffect(() => {
+    let DISPONIBLES = [
+      {
+        id: 1, //cedula
+        nombre: "Cata Preci",
+        especialidad: "sprinter",
+        genero: "Femenino",
+        contextura: "delgada",
+        tiempo: "10",
+      },
+      {
+        id: 2,
+        nombre: "Cata Preci",
+        especialidad: "sprinter",
+        genero: "Femenino",
+        contextura: "delgada",
+        tiempo: "10",
+      },
+      {
+        id: 3,
+        nombre: "Cata Preci",
+        especialidad: "sprinter",
+        genero: "Femenino",
+        contextura: "delgada",
+        tiempo: "10",
+      },
+    ];
+    let AGREGADOS = [
+      {
+        id: 4,
+        nombre: "Cata Preci",
+        especialidad: "sprinter",
+        genero: "Femenino",
+        contextura: "delgada",
+        tiempo: "10",
+      },
+      {
+        id: 5,
+        nombre: "Cata Preci",
+        especialidad: "sprinter",
+        genero: "Femenino",
+        contextura: "delgada",
+        tiempo: "10",
+      },
+    ];
     if (hijosMontados === 1 || hijosMontados === 2) {
       DISPONIBLES = DISPONIBLES.map((item) => ({
         ...item,

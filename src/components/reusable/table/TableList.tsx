@@ -14,6 +14,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Pagination,
+  SortDescriptor,
 } from "@nextui-org/react";
 import { PlusIcon } from "./PlusIcon";
 import { VerticalDotsIcon } from "./VerticalDotsIcon";
@@ -24,26 +25,30 @@ import { capitalize } from "./utils";
 
 const INITIAL_VISIBLE_COLUMNS = ["pais", "equipo", "tiempo"];
 
+interface flagMap {
+  [key: string]: string;
+}
+
 export const TableList = () => {
   const [filterValue, setFilterValue] = useState("");
   const [visibleColumns, setVisibleColumns] = useState(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = useState("all");
   const [rowsPerPage, setRowsPerPage] = useState(100);
-  const [sortDescriptor, setSortDescriptor] = useState({
+  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
     column: "tiempo",
     direction: "ascending",
   });
   const [page, setPage] = useState(1);
   const [countries, setCountries] = useState([]);
-  const [flagMap, setFlagMap] = useState({});
+  const [flagMap, setFlagMap] = useState({}as flagMap);
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
     // Fetch countries data
     axios.get("https://restcountries.com/v3.1/all")
       .then(response => {
-        const map = {};
-        response.data.forEach(country => {
+        const map: { [key: string]: any } = {};
+        response.data.forEach((country: { name: { common: string; }; flags: { png: any; }; }) => {
           map[country.name.common.toLowerCase()] = country.flags.png;
         });
         setFlagMap(map);
@@ -55,7 +60,7 @@ export const TableList = () => {
         console.error("Error fetching countries data:", error);
         setDataLoaded(true); // Ensure dataLoaded is true even if there's an error to avoid infinite loading
       });
-  }, []);
+  }, [users, filterValue]);
 
   const hasSearchFilter = Boolean(filterValue);
 
@@ -88,24 +93,27 @@ export const TableList = () => {
 
   const sortedItems = useMemo(() => {
     return [...items].sort((a, b) => {
-      const first = a[sortDescriptor.column];
-      const second = b[sortDescriptor.column];
+      const first = a[sortDescriptor.column as keyof typeof a];
+      const second = b[sortDescriptor.column as keyof typeof b];
       const cmp = first < second ? -1 : first > second ? 1 : 0;
-
+  
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = useCallback((user, columnKey) => {
+  const renderCell = useCallback((user: { [x: string]: any; pais: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<React.AwaitedReactNode> | null | undefined; }, columnKey: string | number) => {
     const cellValue = user[columnKey];
 
     switch (columnKey) {
       case "pais":
         return (
           <div className="flex items-center">
-            {flagMap[user.pais.toLowerCase()] && (
-              <img src={flagMap[user.pais.toLowerCase()]} alt={`${user.pais} flag`} width={24} height={16} />
-            )}
+            {
+              //flagMap['Colombia']
+            flagMap[(user.pais as string).toLowerCase()] && (
+              <img src={flagMap[(user.pais as string).toLowerCase()]} alt={`${user.pais} flag`} width={24} height={16} />
+            )
+            }
             <span className="ml-2">{user.pais}</span>
           </div>
         );
@@ -139,12 +147,12 @@ export const TableList = () => {
     }
   }, [page]);
 
-  const onRowsPerPageChange = useCallback((e) => {
+  const onRowsPerPageChange = useCallback((e: { target: { value: any; }; }) => {
     setRowsPerPage(Number(e.target.value));
     setPage(1);
   }, []);
 
-  const onSearchChange = useCallback((value) => {
+  const onSearchChange = useCallback((value: React.SetStateAction<string>) => {
     if (value) {
       setFilterValue(value);
       setPage(1);
@@ -184,7 +192,7 @@ export const TableList = () => {
                 closeOnSelect={false}
                 selectedKeys={visibleColumns}
                 selectionMode="multiple"
-                onSelectionChange={setVisibleColumns}
+                // onSelectionChange={setVisibleColumns}
               >
                 {columns.map((column) => (
                   <DropdownItem key={column.uid} className="capitalize">
