@@ -92,6 +92,7 @@ export default function Carrera() {
             type="submit"
             radius="full"
             className="w-1/4 min-w-32 mb-2 text-white min-h-8"
+            onClick={() => router.push("carrera/simular")}
           >
             <p className="text-sm md:text-base lg:text-xl">Crear</p>
           </Button>

@@ -1,8 +1,10 @@
 import { Navbar, NavbarContent, Image } from "@nextui-org/react";
 import React from "react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
+    const router = useRouter();
     return (
         <Navbar className="bg-primary  p-0 rounded-2xl w-full min-h-20 justify-start ">
             <NavbarContent as="div" justify="start" className="p-0">
@@ -20,9 +22,8 @@ export const Header = () => {
                             </Button>
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Static Actions" >
-                            <DropdownItem key="new" >Creacion de Equipo</DropdownItem>
-                            <DropdownItem key="copy">Equipo</DropdownItem>
-                            <DropdownItem key="edit">Perfil</DropdownItem>
+                            <DropdownItem key="new" href="/director/creacionEquipo" >Creacion de Equipo</DropdownItem>
+                            <DropdownItem key="edit" href="/login">Perfil</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                 </div>

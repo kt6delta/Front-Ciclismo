@@ -4,9 +4,11 @@ import Imagen from "@/components/simulation/Imagen";
 import { IoIosBicycle } from "react-icons/io";
 import { Title } from "@/components/reusable/title";
 import { CardWrapper } from "@/components/reusable/CardWrapper";
+import { useRouter } from 'next/navigation';
 
 export default function Progreso() {
   const [progress, setProgress] = useState(0);
+  const router = useRouter();
   useEffect(() => {
     import('progressbar.js').then(ProgressBar => {
       var bar = new ProgressBar.default.Path('#heart-path', {
@@ -29,7 +31,7 @@ export default function Progreso() {
       bar.set(0);
       bar.animate(1, {
       }, function () {
-        console.log('Carrera has finished');
+        router.push("/carrera/ganar")
       });
     });
   }, []);

@@ -100,6 +100,7 @@ export default function Ganador() {
           type="submit"
           radius="full"
           className="w-1/3 min-w-32 mb-2 bg-secondary text-white"
+          onClick={() => router.push("/carrera/tablaResultados")}
         >
           Continuar
         </Button>
