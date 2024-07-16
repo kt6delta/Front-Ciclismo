@@ -41,12 +41,12 @@ export default function HomePage() {
 
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
-            <Button as={Link} color="primary" href="#" variant="flat" className='text-black'>
+            <Button as={Link} color="primary" href="/registrar" variant="flat" className='text-black'>
               Ingresar
             </Button>
           </NavbarItem>
           <NavbarItem>
-            <Button as={Link} color="primary" href="#" variant="flat" className='text-black'>
+            <Button as={Link} color="primary" href="/login" variant="flat" className='text-black'>
               Registrarse
             </Button>
           </NavbarItem>
