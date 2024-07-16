@@ -26,7 +26,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col  justify-center bg-gradient-to-r from-gray-50 to-blue-600">
       <Navbar className='min-h-20'>
-        <NavbarBrand>
+        <NavbarContent>
 
           <div className="ml-4 p-2 justify-start  rounded-2xl">
             <Image
@@ -37,16 +37,16 @@ export default function HomePage() {
               height={100}
             />
           </div>
-        </NavbarBrand>
+        </NavbarContent>
 
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
-            <Button as={Link} color="primary" href="#" variant="flat" className='text-black'>
+            <Button as={Link} color="primary" onClick={() => router.push('/login')} variant="flat" className='text-black'>
               Ingresar
             </Button>
           </NavbarItem>
           <NavbarItem>
-            <Button as={Link} color="primary" href="#" variant="flat" className='text-black'>
+            <Button as={Link} color="primary" onClick={() => router.push('/registro')} variant="flat" className='text-black'>
               Registrarse
             </Button>
           </NavbarItem>
