@@ -11,8 +11,10 @@ import {
   Input,
 } from "@nextui-org/react";
 import { paises, masajista } from "@/utils/constantes/data";
+import { useRouter } from "next/navigation";
 
 const CreacionEquipo = () => {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [formData, setFormData] = useState({
     nacionalidad: "",
@@ -147,6 +149,7 @@ const CreacionEquipo = () => {
           type="submit"
           radius="full"
           className="w-1/3 min-w-32 mb-2 text-white"
+          onClick={() => router.push("/director")}
         >
           Crear
         </Button>

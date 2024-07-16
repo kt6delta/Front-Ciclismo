@@ -5,9 +5,9 @@ export default function AdminLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <div className="bg-background">
+      <div className="bg-background md:flex min-h-screen">
       <MenuAdmin />
-        <div className="mx-auto page-container">
+        <div className="mx-auto my-auto page-container">
           {children}
         </div>
       </div>

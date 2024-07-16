@@ -17,6 +17,9 @@ const config: Config = {
       '2xl': '1536px',
     },
     extend: {
+      backgroundImage: {
+        'racer': "url('/fondo_simulacion2.png')",
+      },
       fontFamily: {
         primary: ['var(--font-ubuntu)'],
         secondary: ['var(--font-nunito)'],
@@ -65,8 +68,9 @@ const config: Config = {
         'bold': '700',
       },
       backgroundColor: {
-        'primary':  '#006FEE',
-        'secondary': '#001731',
+        primary:  '#006FEE',
+        secondary: '#001731',
+        transparent: "#fafafa",
       },
     },
   },
@@ -83,7 +87,6 @@ const config: Config = {
       themes: {
         light: {
           colors: {
-            content1: 'rgba(0, 23, 49, 0.4)',
             background: '#fafafa',
             primary: {
               600: "rgba(0, 91, 196, 0.6)",

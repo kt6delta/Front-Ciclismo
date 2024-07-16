@@ -14,7 +14,8 @@ import {
   countries,
   especialidad,
   sexos,
-  paises
+  paises,
+  acciones2
 } from "@/utils/constantes/data";
 import axios from "axios";
 
@@ -30,7 +31,7 @@ type FormData = {
   nacionalidad: string;
   tiempoAcumula: string;
   acciones: { value: string; label: string }[];
-  equipos: string[];
+  equipos: string;
 };
 interface IForm {
   handleSubmit(formData: FormData): Promise<boolean>;
@@ -148,8 +149,8 @@ export default function Perfil() {
     experiencia: "",
     nacionalidad: "",
     tiempoAcumula: "0",
-    acciones: [{ value: '', label: '' }],
-    equipos: [""],
+    acciones: [{ value: "", label: "" }],
+    equipos: "",
   });
   const [form, setForm] = useState<IForm | null>(null);
   const [titulo, setTitulo] = useState("");
@@ -166,8 +167,12 @@ export default function Perfil() {
         switch (rol) {
           case "1":
             console.log(
-              `URL: ${process.env.NEXT_PUBLIC_URL_BACKEND}/usuarios/perfilCiclista/ `
+              `URL: ${process.env.NEXT_PUBLIC_URL_BACKEND}/usuarios/perfilCiclista`
             );
+            // let accionesObject = perfilData.acciones.map((accion: any) => ({
+            //   label: accion,
+            //   value: accion
+            // }));
             response = await axios.post(
               `${process.env.NEXT_PUBLIC_URL_BACKEND}/usuarios/perfilCiclista`,
               {
@@ -175,7 +180,6 @@ export default function Perfil() {
               }
             );
             response = response.data;
-            console.log(response);
             break;
           case "2":
             response = await axios.post(
@@ -198,10 +202,7 @@ export default function Perfil() {
         }
         // Suponiendo que la respuesta tiene la estructura esperada para llenar formData
         const perfilData = response;
-        let accionesObject = perfilData.acciones.map((accion: any) => ({
-          label: accion,
-          value: accion
-        }));
+        // console.log(accionesObject);
         setFormData({
           rol: perfilData.rol_id.toString(),
           email: perfilData.email,
@@ -209,13 +210,14 @@ export default function Perfil() {
           cedula: perfilData.idusuario.toString(),
           sexo: perfilData.sexo === "M" ? "Masculino" : "Femenino",
           contextura: perfilData.contextura || "",
-          especialidad: perfilData.especialidad_id.toString() || "0",
-          experiencia: perfilData.experiencia || "",
+          especialidad: perfilData.especialidad_id?.toString() || "0",
+          experiencia: perfilData.anios_experiencia || "",
           nacionalidad: perfilData.nacionalidad || "",
           tiempoAcumula: perfilData.tiempoAcumula || "0",
-          acciones: accionesObject || [{ value: '', label: '' }],
+          acciones: acciones2 || [{ value: "", label: "" }],
           equipos: perfilData.equipos || [""], // un array de strings con los nombres de equipos
         });
+        // console.log(formData.acciones);
       } catch (error) {
         console.error("Error al obtener el perfil:", error);
       }
@@ -225,7 +227,7 @@ export default function Perfil() {
     switch (formData.rol) {
       case "1":
         setTitulo("CICLISTA");
-        setEquip(formData.equipos[0]);
+        setEquip(formData.equipos);
         setForm(new Ciclista());
         break;
       case "2":
@@ -235,7 +237,7 @@ export default function Perfil() {
         break;
       case "3":
         setTitulo("DIRECTOR");
-        setEquip(formData.equipos[0]);
+        setEquip(formData.equipos);
         setForm(new Director());
         break;
       default:
@@ -290,36 +292,7 @@ export default function Perfil() {
           </div>
         </div>
         <h1 className="absolute right-0 text-secondary text-base md:text-xl xl:text-2xl font-bold text-right px-[60px]">
-          {equip && equip.length <= 1 ? (
-            `${equip}`
-          ) : (
-            <Button
-              color="secondary"
-              variant="solid"
-              type="button"
-              radius="full"
-              className="w-1/3 min-w-32 mb-2 text-white"
-              onClick={() => router.push("/masajista/listaEquipos")}
-            >
-              {"Equipos"}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1.3rem"
-                height="1.3rem"
-                viewBox="0 0 24 24"
-              >
-                <g
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                >
-                  <path d="m9 10l3.258 2.444a1 1 0 0 0 1.353-.142L20 5" />
-                  <path d="M21 12a9 9 0 1 1-6.67-8.693" />
-                </g>
-              </svg>
-            </Button>
-          )}
+          {equip}
         </h1>
       </div>
       <form className="w-full p-10 grid my-auto" onSubmit={handleSubmit}>
@@ -395,9 +368,9 @@ export default function Perfil() {
                     key={indexOption}
                     htmlFor={`${indexOption}`}
                     tabIndex={0}
-                    className={`flex items-center justify-center text-small text-secondary font-light py-3 px-4 border-1 border-secondary-300 rounded-default cursor-pointer w-full text-center 
+                    className={`flex items-center justify-center text-small text-secondary font-light py-3 px-4 border-1 border-secondary rounded-default cursor-pointer w-full text-center 
                       transition-all ease-in-out duration-300 
-                      ${formData.sexo === option ? "bg-primary" : ""} 
+                      ${formData.sexo === option ? "bg-primary text-white" : ""} 
                       outline-secondary`}
                     onKeyDown={(event) =>
                       !isReadOnly &&
@@ -502,6 +475,7 @@ export default function Perfil() {
                     radius="md"
                     placeholder="Seleccione un Rol"
                     defaultItems={formData.acciones}
+                    defaultSelectedKey={formData.acciones[0].value}
                     onSelectionChange={(value) => setAcciones(value as string)}
                     classNames={{
                       base: "font-bold",

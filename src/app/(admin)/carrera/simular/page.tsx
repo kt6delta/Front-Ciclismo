@@ -1,14 +1,10 @@
 "use client";
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-
+import Progreso from '@/components/simulation/Progreso';
 export default function Simular() {
-    const router = useRouter();
 
     return (
         <>
-            <div className=''>
-            </div>
+            <Progreso />
         </>
     )
 }

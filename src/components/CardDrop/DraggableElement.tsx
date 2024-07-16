@@ -25,7 +25,7 @@ export const DraggableElement: FC<Props> = ({
 }) => {
   useEffect(() => {
     onMontado(1);
-  }, [onMontado]);
+  }, []);
   return (
     <>
       <div>
