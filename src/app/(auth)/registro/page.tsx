@@ -365,7 +365,7 @@ export default function Registro() {
                         key={indexOption}
                         htmlFor={`${indexOption}`}
                         tabIndex={0}
-                        className={`flex items-center justify-center text-small text-secondary font-light py-3 px-4 border-1 border-secondary-300 rounded-default cursor-pointer w-full text-center 
+                        className={`flex items-center justify-center text-small text-secondary font-light py-3 px-4 border-1 border-secondary rounded-default cursor-pointer w-full text-center 
                     transition-all ease-in-out duration-300 
                     ${formData.sexo === option ? "bg-primary text-white" : ""} 
                     outline-secondary`}

@@ -1,7 +1,13 @@
+import React from "react";
+import { TableList } from "@/components/reusable/table/TableList";
+import { CardWrapper } from "@/components/reusable/CardWrapper";
+
 const TablaResultados = () => {
   return (
     <>
-      <div className="bg-primary text-background flex justify-center w-full min-h-[5vh] sm:justify-end"></div>
+      <CardWrapper className="p-10 bg-white">
+        <TableList />
+      </CardWrapper>
     </>
   );
 };

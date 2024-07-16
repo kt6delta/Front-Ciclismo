@@ -1,6 +1,6 @@
 interface CardWrapperProps {
     children: React.ReactNode;
-    className: string;
+    className?: string;
 }
 
 export const CardWrapper = ({children, className } : CardWrapperProps) => {

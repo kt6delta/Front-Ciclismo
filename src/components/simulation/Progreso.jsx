@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Imagen from "@/components/simulation/Imagen";
 import { IoIosBicycle } from "react-icons/io";
 import { Title } from "@/components/reusable/title";
+import { CardWrapper } from "@/components/reusable/CardWrapper";
+
 export default function Progreso() {
   const [progress, setProgress] = useState(0);
   useEffect(() => {
@@ -37,15 +39,17 @@ export default function Progreso() {
   };
   return (
     <>
-      <div className="flex justify-center items-center mb-20">
+      <div className="flex justify-center mb-20">
         <Title mesage="CARRERA" />
       </div>
-      <div className="flex justify-center items-center" style={iconStyle}>
-        <IoIosBicycle className="w-12 h-12" />
+      <CardWrapper className="bg-racer bg-cover w-full h-[60vh] flex flex-col justify-end">
+      <div className="flex justify-center items-end" style={iconStyle}>
+        <IoIosBicycle className="w-12 h-12 md:w-14 md:h-14 xl:w-16 xl:h-16 text-[#C20E4D]" />
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-end">
         <Imagen />
       </div>
+      </CardWrapper>
     </>
   );
 }

@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import axios from "axios";
 import {
@@ -16,12 +17,11 @@ import {
   Pagination,
   SortDescriptor,
 } from "@nextui-org/react";
-import { PlusIcon } from "./PlusIcon";
-import { VerticalDotsIcon } from "./VerticalDotsIcon";
-import { SearchIcon } from "./SearchIcon";
-import { ChevronDownIcon } from "./ChevronDownIcon";
-import { columns, users } from "./data";
-import { capitalize } from "./utils";
+import { SearchIcon } from "@/components/reusable/table/SearchIcon";
+import { ChevronDownIcon } from "@/components/reusable/table/ChevronDownIcon";
+import { columns, users } from "@/utils/constantes/data";
+import { capitalize } from "@/utils/utils";
+import { Title } from "@/components/reusable/title";
 
 const INITIAL_VISIBLE_COLUMNS = ["pais", "equipo", "tiempo"];
 
@@ -114,20 +114,20 @@ export const TableList = () => {
               <img src={flagMap[(user.pais as string).toLowerCase()]} alt={`${user.pais} flag`} width={24} height={16} />
             )
             }
-            <span className="ml-2">{user.pais}</span>
+            <span className="text-small md:text-base lg:text-xl ml-2">{user.pais}</span>
           </div>
         );
       case "equipo":
         return (
           <div className="flex flex-col">
-            <p className="text-xl capitalize">{cellValue}</p>
+            <p className="text-small md:text-base lg:text-xl capitalize">{cellValue}</p>
           </div>
         );
       case "tiempo":
       case "id":
         return (
           <div className="flex flex-col">
-            <p className="text-bold capitalize">{cellValue}</p>
+            <p className="text-small md:text-base lg:text-xl text-bold capitalize">{cellValue}</p>
           </div>
         );
       default:
@@ -182,7 +182,7 @@ export const TableList = () => {
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
+                <Button endContent={<ChevronDownIcon className="text-small md:text-base lg:text-xl" />} variant="flat">
                   Columns
                 </Button>
               </DropdownTrigger>
@@ -204,14 +204,14 @@ export const TableList = () => {
           </div>
         </div>
         <div className="flex flex-col">
-          <p className="text-bold text-xl capitalize font-extrabold ml-8">RESULTADOS DE CARRERA</p>
+        <Title className="ml-8 capitalize" mesage="RESULTADOS DE CARRERA" />
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small ml-6">Total {users.length} equipos</span>
-          <label className="flex items-center text-default-400 text-small mr-12">
+          <span className="text-default-400 text-small md:text-base lg:text-xl ml-6">Total {users.length} equipos</span>
+          <label className="flex items-center text-default-400 text-small md:text-base lg:text-xl mr-12">
             Rows per page:
             <select
-              className="bg-transparent outline-none text-default-400 text-small ml-2"
+              className="bg-transparent outline-none text-default-400 text-small md:text-base lg:text-xl ml-2"
               onChange={onRowsPerPageChange}
             >
               <option value="100">100</option>
