@@ -9,26 +9,13 @@ interface TitleProps {
 export const TipoEtapas = ({ mesage }: TitleProps) => {
     return (
         <>
-            <div className="grid grid-cols-2">
-                <Input
-                    type="number"
-                    variant="underlined"
-                    label="Nombre"
-                    name="nombre"
-                    // value={formData.nombre}
-                    // onChange={handleChange}
-                    placeholder="Los Best"
-                    classNames={{
-                        base: "font-bold",
-                    }}
-                />
-                <Autocomplete
-                    label="Nacionalidad"
+            <div className="grid grid-cols-2 gap-x-16">
+            <Autocomplete
+                    label="Tipo"
                     color="secondary"
                     variant="underlined"
                     size="md"
                     radius="md"
-                    placeholder="Seleccione un Nacionalidad"
                     defaultItems={etapas}
                     classNames={{
                         base: "font-bold",
@@ -37,16 +24,27 @@ export const TipoEtapas = ({ mesage }: TitleProps) => {
                     {etapas.map((option: any) => (
                         <AutocompleteItem
                             key={option.value}
-                            value={option.label}
+                            value={option.value}
                             classNames={{
                                 selectedIcon:
                                     "text-secondary",
                             }}
                         >
-                            {option}
+                            {option.label}
                         </AutocompleteItem>
                     ))}
                 </Autocomplete>
+                <Input
+                    type="number"
+                    variant="underlined"
+                    label="Etapa"
+                    name="etapa"
+                    // value={formData.nombre}
+                    // onChange={handleChange}
+                    classNames={{
+                        base: "font-bold",
+                    }}
+                />
             </div>
         </>
     )

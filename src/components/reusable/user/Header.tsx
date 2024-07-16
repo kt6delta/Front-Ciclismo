@@ -20,8 +20,8 @@ export const Header = () => {
                             </Button>
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Static Actions" >
-                            <DropdownItem key="new" >Creacion de Equipo </DropdownItem>  
-                            <DropdownItem key="copy">Equipos</DropdownItem>
+                            <DropdownItem key="new" >Creacion de Equipo</DropdownItem>
+                            <DropdownItem key="copy">Equipo</DropdownItem>
                             <DropdownItem key="edit">Perfil</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
